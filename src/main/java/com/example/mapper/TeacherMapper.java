@@ -1,7 +1,6 @@
-package com.example.Mapper;
+package com.example.mapper;
 
-import com.example.Entity.Student;
-import com.example.Entity.Teacher;
+import com.example.entity.Teacher;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

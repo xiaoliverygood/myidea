@@ -1,13 +1,14 @@
-package com.example.Request;
+package com.example.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class RequestRegisterStudent {
-    private int sid;
+public class Teacher {
+    private int tid;
     private String name;
     private String email;
+    private String lesson;
     private String password;
 }

@@ -1,10 +1,10 @@
 package com.example;
 
-import com.example.Entity.Student;
-import com.example.Entity.Teacher;
-import com.example.Mapper.StudentMapper;
-import com.example.Mapper.TeacherMapper;
-import com.example.Utils.CaptchaUtil;
+import com.example.entity.Student;
+import com.example.entity.Teacher;
+import com.example.mapper.StudentMapper;
+import com.example.mapper.TeacherMapper;
+import com.example.utils.CaptchaUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -59,9 +59,11 @@ class FirstApplicationTests {
     CaptchaUtil captchaUtil;
     @Test
     void  textCapthchaUtils(){
+//        System.out.println(captchaUtil.getCode());
+        captchaUtil.contextLoads("2848762983@qq.com");
 
-    captchaUtil.contextLoads("200231","2848762983@qq.com");
 
+        System.out.println(CaptchaUtil.code);
 
 
     }
