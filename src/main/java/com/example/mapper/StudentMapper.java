@@ -16,5 +16,7 @@ public interface StudentMapper {
     void deleteStudentBySid(int sid);
     @Update("UPDATE Student SET name = #{name} WHERE sid =#{sid}")
     public void UpdateStudentNameById(@Param("sid") int sid, @Param("name") String Newname);
+    @Update("UPDATE Student SET password = #{password} WHERE sid =#{sid}")
+    public void UpdateStudentPasswordById(@Param("sid") int sid, @Param("password") String Newpassword);
 
 }
