@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface StudentMapper {
-    @Insert("INSERT INTO `firstproject`.`Student`(`sid`, `name`, `email`) VALUES (#{Student.sid}, #{Student.name}, #{Student.email})")
+    @Insert("INSERT INTO `firstproject`.`Student`(`sid`, `name`, `email`, `password`) VALUES (#{Student.sid}, #{Student.name}, #{Student.email},#{Student.password})")
     void insertStudent(@Param("Student")Student student);
 //注意，不需要返回值，不然会出现报错的情况，但是数据库里面是增加了
     @Select("select * from Student where sid=#{sid}")

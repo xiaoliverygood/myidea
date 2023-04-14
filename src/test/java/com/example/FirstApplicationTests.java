@@ -26,12 +26,12 @@ class FirstApplicationTests {
     }
     @Test
     void TextMysqlInsert(){
-        Student student=new Student(2,"xiaochen","128319@qq.com");
+        Student student=new Student(2,"xiaochen","128319@qq.com","8978921");
         studentMapper.insertStudent(student);
     }
     @Test
     void TextMysqlSelect(){
-        Student studentSelect=studentMapper.getStudentById(1);
+        Student studentSelect=studentMapper.getStudentById(2);
         System.out.println(studentSelect.getName());
     }
     @Test
@@ -45,7 +45,7 @@ class FirstApplicationTests {
     }
     @Test
     void TextMysqlInserTeacher(){
-        Teacher teacher=new Teacher(2,"小刚","13657@qq.com","Pc");
+        Teacher teacher=new Teacher(2,"小刚","13657@qq.com","Pc","wuiehriweu");
         teacherMapper.insertTeacher(teacher);
     }
     @Test

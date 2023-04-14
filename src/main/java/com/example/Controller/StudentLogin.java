@@ -15,6 +15,7 @@ public class StudentLogin {
     }
     @RequestMapping("/login")
     public String login(@RequestBody RequestLoginStudent login){
+        return "xiaoli";
 
 
     }
