@@ -7,9 +7,7 @@ import com.example.service.AdmitService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/admin")
@@ -23,7 +21,7 @@ public class AdmitController {
             Admitsession.setAttribute("AdmitUser",admitMapper.getAdimitById(admin.getId()));
            return BaseResponse.success(admitMapper.getAdimitById(admin.getId()));
         }else {
-            return BaseResponse.Error();
+            return BaseResponse.Error("用户名或者密码错误");
         }
     }
     @RequestMapping("/logout")
@@ -31,7 +29,7 @@ public class AdmitController {
         HttpSession session = httpServletRequest.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error();
+            return BaseResponse.Error("请登陆后再进行访问！");
         }else {
             session.removeAttribute("AdmitUser");
             return BaseResponse.success("成功退出登录");
@@ -39,47 +37,47 @@ public class AdmitController {
     }
     @Autowired
     AdmitService admitService;
-    @RequestMapping("/addLink")
+    @PostMapping ( "/addLink")
     public BaseResponse<String> addLink(HttpServletRequest request,int tid,int sid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error();
+            return BaseResponse.Error("请登陆后再进行访问！");
         }else {
             admitService.TeacherAddStudent(sid,tid);
             return BaseResponse.success("成功添加");
         }
     }
 
-    @RequestMapping("/deleteLink")
+    @DeleteMapping("/deleteLink")
     public BaseResponse<String> deleteLink(HttpServletRequest request,int sid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error();
+            return BaseResponse.Error("请登陆后再进行访问！");
         }else {
             admitService.TeacherDeleteStudent(sid);
             return BaseResponse.success("成功删除关系");
         }
     }
-    @RequestMapping("/deleteStudent")
+    @DeleteMapping("/deleteStudent")
     public BaseResponse<String> deleteStudent(HttpServletRequest request,int sid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error();
+            return BaseResponse.Error("请登陆后再进行访问！");
         }else {
             admitService.deleteStudent(sid);
             admitService.TeacherDeleteStudent(sid);
             return BaseResponse.success("成功删除学生");
         }
     }
-    @RequestMapping("/deleteTeacher")
+    @DeleteMapping("/deleteTeacher")
     public BaseResponse<String> deleteTeacher(HttpServletRequest request,int tid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error();
+            return BaseResponse.Error("请登陆后再进行访问！");
         }else {
             admitService.deleteTeacher(tid);
             return BaseResponse.success("成功删除老师");

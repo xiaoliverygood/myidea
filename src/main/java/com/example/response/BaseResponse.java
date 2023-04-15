@@ -13,7 +13,8 @@ public class BaseResponse<T> {
     public static <T>BaseResponse<T> success(T data){
         return new BaseResponse(200,data,"ok");
     }
-    public static <T>BaseResponse<T> Error(){
-        return new BaseResponse(500,null,"Error");
+    public static <T>BaseResponse<T> Error(String message){
+        return new BaseResponse(500,null,message);
     }
+
 }
