@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/Student")
 public class StudentLoginController {
-
-
     @Autowired
     StudentMapper studentMapper;
     @RequestMapping("/register")
