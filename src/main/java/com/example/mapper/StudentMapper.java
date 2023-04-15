@@ -19,4 +19,5 @@ public interface StudentMapper {
     @Update("UPDATE Student SET password = #{password} WHERE sid =#{sid}")
     public void UpdateStudentPasswordById(@Param("sid") int sid, @Param("password") String Newpassword);
 
+
 }
