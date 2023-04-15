@@ -94,6 +94,5 @@ public class StudentLoginController {
         }else {
            return BaseResponse.success(studentMapper.getTeacherBysid(student.getSid()));
         }
-
     }
 }
