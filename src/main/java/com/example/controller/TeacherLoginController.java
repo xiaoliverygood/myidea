@@ -43,6 +43,16 @@ public class TeacherLoginController {
             return BaseResponse.Error();
         }
     }
+    @RequestMapping("/Inquire")
+    public BaseResponse<Teacher> InquireTeacher(HttpServletRequest httpServletRequest){
+        HttpSession httpSession=httpServletRequest.getSession();
+        Teacher teacher=(Teacher) httpSession.getAttribute("teacherUser");
+        if(teacher==null){
+            return BaseResponse.Error();
+        }else {
+            return BaseResponse.success(teacherMapper.getTeacherById(teacher.getTid()));
+        }
+    }
     @RequestMapping("/updateName")
     public BaseResponse<Teacher> updateTeacherName(HttpServletRequest httpServletRequest, String newName){
         HttpSession httpSession=httpServletRequest.getSession();

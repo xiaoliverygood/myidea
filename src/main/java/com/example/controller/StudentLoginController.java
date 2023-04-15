@@ -66,6 +66,16 @@ public class StudentLoginController {
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
         }
     }
+    @RequestMapping("/inquire")
+    public BaseResponse<Student> InquireStudent(HttpServletRequest httpServletRequest){
+        HttpSession httpSession=httpServletRequest.getSession();
+        Student student=(Student) httpSession.getAttribute("User");
+        if(student==null){
+            return BaseResponse.Error();
+        }else {
+            return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
+        }
+    }
     @RequestMapping("/logout")
     public BaseResponse<String> logout(HttpServletRequest httpServletRequest){
         HttpSession httpSession=httpServletRequest.getSession();
