@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Student;
+import com.example.entity.StudentResult;
 import com.example.entity.Teacher;
 import com.example.mapper.TeacherMapper;
 import com.example.request.RequestLoginStudent;
@@ -14,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/Teacher")
@@ -78,12 +81,23 @@ public class TeacherLoginController {
     @RequestMapping("/logout")
     public BaseResponse<String> logout(HttpServletRequest httpServletRequest){
         HttpSession httpSession=httpServletRequest.getSession();
-        Student student=(Student) httpSession.getAttribute("teacherUser");
-        if(student==null){
+       Teacher teacher=(Teacher) httpSession.getAttribute("teacherUser");
+        if(teacher==null){
             return BaseResponse.Error();
         }else {
             httpSession.removeAttribute("teacherUser");
             return BaseResponse.success("成功退出登录");
+        }
+    }
+    @RequestMapping("/findStudent")
+    public BaseResponse<List<StudentResult>> findStudent(HttpServletRequest httpServletRequest){
+        HttpSession httpSession=httpServletRequest.getSession();
+        Teacher teacher=(Teacher) httpSession.getAttribute("teacherUser");
+        if(teacher==null){
+            return BaseResponse.Error();
+        }else {
+            List<StudentResult> listStudent=teacherMapper.FindMyStudentBytid(teacher.getTid());
+           return BaseResponse.success(listStudent);
         }
     }
 

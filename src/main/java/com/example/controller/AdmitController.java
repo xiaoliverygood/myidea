@@ -40,7 +40,7 @@ public class AdmitController {
     @Autowired
     AdmitService admitService;
     @RequestMapping("/addLink")
-    public BaseResponse addLink(HttpServletRequest request,int tid,int sid){
+    public BaseResponse<String> addLink(HttpServletRequest request,int tid,int sid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
@@ -52,7 +52,7 @@ public class AdmitController {
     }
 
     @RequestMapping("/deleteLink")
-    public BaseResponse deleteLink(HttpServletRequest request,int sid){
+    public BaseResponse<String> deleteLink(HttpServletRequest request,int sid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
@@ -63,7 +63,7 @@ public class AdmitController {
         }
     }
     @RequestMapping("/deleteStudent")
-    public BaseResponse deleteStudent(HttpServletRequest request,int sid){
+    public BaseResponse<String> deleteStudent(HttpServletRequest request,int sid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
@@ -75,7 +75,7 @@ public class AdmitController {
         }
     }
     @RequestMapping("/deleteTeacher")
-    public BaseResponse deleteTeacher(HttpServletRequest request,int tid){
+    public BaseResponse<String> deleteTeacher(HttpServletRequest request,int tid){
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){

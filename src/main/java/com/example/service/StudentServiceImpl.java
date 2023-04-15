@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.entity.TeacherResult;
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
@@ -13,5 +14,8 @@ public class StudentServiceImpl implements StudentService{
     StudentMapper studentMapper;
     @Autowired
     TeacherMapper teacherMapper;
+    public TeacherResult FindeTeacher(int sid){
+        return studentMapper.getTeacherBysid(sid);
+    }
 
 }

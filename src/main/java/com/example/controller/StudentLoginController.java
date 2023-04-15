@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Student;
+import com.example.entity.TeacherResult;
 import com.example.mapper.StudentMapper;
 import com.example.request.RequestLoginStudent;
 import com.example.request.RequestRegisterStudent;
@@ -66,7 +67,7 @@ public class StudentLoginController {
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
         }
     }
-    @RequestMapping("/inquire")
+    @RequestMapping("/inquire")//查找个人信息
     public BaseResponse<Student> InquireStudent(HttpServletRequest httpServletRequest){
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
@@ -86,5 +87,16 @@ public class StudentLoginController {
             httpSession.removeAttribute("User");
             return BaseResponse.success("成功退出登录");
         }
+    }
+    @RequestMapping("/findTeacher")
+    public BaseResponse<TeacherResult> findTeacher(HttpServletRequest httpServletRequest){
+        HttpSession httpSession=httpServletRequest.getSession();
+        Student student=(Student) httpSession.getAttribute("User");
+        if(student==null){
+            return BaseResponse.Error();
+        }else {
+           return BaseResponse.success(studentMapper.getTeacherBysid(student.getSid()));
+        }
+
     }
 }
