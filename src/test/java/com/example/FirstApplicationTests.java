@@ -1,7 +1,9 @@
 package com.example;
 
 import com.example.entity.Student;
+import com.example.entity.StudentResult;
 import com.example.entity.Teacher;
+import com.example.entity.TeacherResult;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
 import com.example.utils.CaptchaUtil;
@@ -85,6 +87,13 @@ class FirstApplicationTests {
         message.setFrom("ljz2020comeon@163.com");
         //OK，万事俱备只欠发送
         sender.send(message);
+    }
+    @Test
+    public void testTeacherFindStudent(){
+        List<StudentResult> list=teacherMapper.FindMyStudentBytid(1);
+        System.out.println(list.get(0));
+        TeacherResult teacherResult=studentMapper.getTeacherBysid(1);
+        System.out.println(teacherResult.getName());
     }
 
 

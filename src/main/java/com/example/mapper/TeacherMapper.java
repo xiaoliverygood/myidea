@@ -1,5 +1,6 @@
 package com.example.mapper;
 
+import com.example.entity.StudentResult;
 import com.example.entity.Teacher;
 import org.apache.ibatis.annotations.*;
 
@@ -22,5 +23,7 @@ public interface TeacherMapper {
     public void UpdateTeacherNameById(@Param("tid") int tid, @Param("name") String Newname);
     @Update("UPDATE Teacher SET password = #{password} WHERE tid =#{tid}")
     public void UpdateTeacherPasswordById(@Param("tid") int tid, @Param("password") String Newpassword);
+    @Select("SELECT Teach.sid,name,email FROM Teach LEFT JOIN Student ON Teach.sid = Student.sid WHERE tid =#{tid};")//老师查找学生
+    public List<StudentResult> FindMyStudentBytid(@Param("tid") int tid);
 
 }
