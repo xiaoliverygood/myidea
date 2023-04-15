@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -63,6 +64,17 @@ public class StudentLoginController {
         }else {
             studentMapper.UpdateStudentPasswordById(student.getSid(),newPassword);
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
+        }
+    }
+    @RequestMapping("/logout")
+    public BaseResponse<String> logout(HttpServletRequest httpServletRequest){
+        HttpSession httpSession=httpServletRequest.getSession();
+        Student student=(Student) httpSession.getAttribute("User");
+        if(student==null){
+            return BaseResponse.Error();
+        }else {
+            httpSession.removeAttribute("User");
+            return BaseResponse.success("成功退出登录");
         }
     }
 }

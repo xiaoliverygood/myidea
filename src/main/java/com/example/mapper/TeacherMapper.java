@@ -17,4 +17,10 @@ public interface TeacherMapper {
     public List<Teacher> getTeacherByLesson(String lesson);
     @Delete("DELETE FROM Teacher WHERE tid=#{tid}")
     void deleteTeacherBySid(int tid);
+
+    @Update("UPDATE Teacher SET name = #{name} WHERE tid =#{tid}")
+    public void UpdateTeacherNameById(@Param("tid") int tid, @Param("name") String Newname);
+    @Update("UPDATE Teacher SET password = #{password} WHERE tid =#{tid}")
+    public void UpdateTeacherPasswordById(@Param("tid") int tid, @Param("password") String Newpassword);
+
 }
