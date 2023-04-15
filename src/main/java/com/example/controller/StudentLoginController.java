@@ -28,7 +28,6 @@ public class StudentLoginController {
             }else{
                 return BaseResponse.Error("请求信息出错！");
             }
-
     }
     @RequestMapping("/login")
     public BaseResponse<Student> login(@RequestBody RequestLoginStudent login,HttpServletRequest httpServletRequest){
@@ -45,7 +44,7 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-           return BaseResponse.Error();
+           return BaseResponse.Error("请登陆后再进行访问！");
         }else {
             studentMapper.UpdateStudentNameById(student.getSid(),newName);
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
@@ -56,7 +55,7 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-            return BaseResponse.Error();
+            return BaseResponse.Error("请登陆后再进行访问！");
         }else {
             studentMapper.UpdateStudentPasswordById(student.getSid(),newPassword);
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
