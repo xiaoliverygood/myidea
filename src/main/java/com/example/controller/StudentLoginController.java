@@ -41,7 +41,6 @@ public class StudentLoginController {
         }else {
             return BaseResponse.Error();
         }
-
     }
     @RequestMapping("/updateName")
     public BaseResponse<Student> updateStudentName(HttpServletRequest httpServletRequest,String newName){
