@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.*;
 public interface AdmitMapper {
     @Select("select * from admit where id=#{id}")
     public Admit getAdimitById(@Param("id") int id);
-    @Insert("INSERT INTO `firstproject`.`Teach`(`tid`, `sid`) VALUES (#{tid}, #{sid}")
+    @Insert("INSERT INTO `firstproject`.`Teach`(`tid`, `sid`) VALUES (#{tid}, #{sid})")
     public void TeacherAddStudent(@Param("tid") int tid, @Param("sid")int sid);
 
     @Delete("DELETE FROM Teach WHERE sid=#{sid}")

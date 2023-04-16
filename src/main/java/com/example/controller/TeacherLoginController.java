@@ -36,7 +36,7 @@ public class TeacherLoginController {
     }
     @RequestMapping("/login")
     public BaseResponse<Teacher> login(@RequestBody RequestLoginTeachger login,HttpServletRequest httpServletRequest){
-        if(login.getPassword().equals(teacherMapper.getTeacherById(login.getTid()))){
+        if(login.getPassword().equals(teacherMapper.getTeacherById(login.getTid()).getPassword())){
             HttpSession httpSession=httpServletRequest.getSession();
             httpSession.setAttribute("teacherUser",teacherMapper.getTeacherById(login.getTid()));
             return BaseResponse.success(teacherMapper.getTeacherById(login.getTid()));

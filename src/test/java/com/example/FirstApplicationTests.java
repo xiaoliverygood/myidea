@@ -4,6 +4,7 @@ import com.example.entity.Student;
 import com.example.entity.StudentResult;
 import com.example.entity.Teacher;
 import com.example.entity.TeacherResult;
+import com.example.mapper.AdmitMapper;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
 import com.example.utils.CaptchaUtil;
@@ -22,6 +23,8 @@ class FirstApplicationTests {
     StudentMapper studentMapper;
     @Autowired
     TeacherMapper teacherMapper;
+    @Autowired
+    AdmitMapper admitMapper;
     @Test
     void contextLoads() {
 
@@ -94,6 +97,10 @@ class FirstApplicationTests {
         System.out.println(list.get(0));
         TeacherResult teacherResult=studentMapper.getTeacherBysid(1);
         System.out.println(teacherResult.getName());
+    }
+    @Test
+    public void testTeacherAddStudent(){
+        admitMapper.TeacherAddStudent(1,2);
     }
 
 
