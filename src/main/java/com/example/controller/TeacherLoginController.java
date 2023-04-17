@@ -41,7 +41,7 @@ public class TeacherLoginController {
             httpSession.setAttribute("teacherUser",teacherMapper.getTeacherById(login.getTid()));
             return BaseResponse.success(teacherMapper.getTeacherById(login.getTid()));
         }else {
-            return BaseResponse.Error("登录失败，请检查id号，密码，验证码");
+            return BaseResponse.Error("登录失败，请检查id号，密码是否正确");
         }
     }
     @GetMapping("/Inquire")
