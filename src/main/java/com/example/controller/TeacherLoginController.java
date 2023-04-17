@@ -9,6 +9,7 @@ import com.example.request.RequestLoginTeachger;
 import com.example.request.RequestRegisterTeachger;
 import com.example.response.BaseResponse;
 import com.example.utils.CaptchaUtil;
+import com.example.utils.EmailRegularExpression;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,13 @@ public class TeacherLoginController {
     public BaseResponse<Teacher> register(@RequestBody RequestRegisterTeachger register){
         String Code=CaptchaUtil.code;
         if(register.getCode().equals(Code)){
-            Teacher teacher=new Teacher(register.getTid(),register.getName(),register.getEmail(),register.getLesson(),register.getPassword());
-            teacherMapper.insertTeacher(teacher);
-            return BaseResponse.success(teacher);
+            if(EmailRegularExpression.RegularEmailPattern(register.getEmail())){
+                Teacher teacher=new Teacher(register.getTid(),register.getName(),register.getEmail(),register.getLesson(),register.getPassword());
+                teacherMapper.insertTeacher(teacher);
+                return BaseResponse.success(teacher);
+            }else {
+                return BaseResponse.Error("邮箱地址错误！");
+            }
         }else {
             return BaseResponse.Error("请求信息出错");
         }
@@ -98,7 +103,4 @@ public class TeacherLoginController {
            return BaseResponse.success(listStudent);
         }
     }
-
-
-
 }

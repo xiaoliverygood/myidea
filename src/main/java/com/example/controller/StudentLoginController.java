@@ -7,6 +7,7 @@ import com.example.request.RequestLoginStudent;
 import com.example.request.RequestRegisterStudent;
 import com.example.response.BaseResponse;
 import com.example.utils.CaptchaUtil;
+import com.example.utils.EmailRegularExpression;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,9 +23,13 @@ public class StudentLoginController {
     @PostMapping("/register")
     public BaseResponse<Student> register(@RequestBody RequestRegisterStudent register){
             if( CaptchaUtil.code.equals(register.getCode())){
-                Student student=new Student(register.getSid(),register.getName(),register.getEmail(),register.getPassword());
-                studentMapper.insertStudent(student);
-                return BaseResponse.success(student);
+                if(EmailRegularExpression.RegularEmailPattern(register.getEmail())){
+                    Student student=new Student(register.getSid(),register.getName(),register.getEmail(),register.getPassword());
+                    studentMapper.insertStudent(student);
+                    return BaseResponse.success(student);
+                }else {
+                    return BaseResponse.Error("邮箱错误");
+                }
             }else{
                 return BaseResponse.Error("请求信息出错！");
             }

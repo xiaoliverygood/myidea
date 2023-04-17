@@ -8,6 +8,7 @@ import com.example.mapper.AdmitMapper;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
 import com.example.utils.CaptchaUtil;
+import com.example.utils.EmailRegularExpression;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -102,6 +103,13 @@ class FirstApplicationTests {
     public void testTeacherAddStudent(){
         admitMapper.TeacherAddStudent(1,2);
     }
+    @Test
+    public void testEmailRe(){
+        Boolean a=EmailRegularExpression.RegularEmailPattern("28783878@qq.com");
+
+        System.out.println(a);
+    }
+
 
 
 }
