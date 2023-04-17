@@ -9,6 +9,7 @@ import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
 import com.example.utils.CaptchaUtil;
 import com.example.utils.EmailRegularExpression;
+import com.example.utils.UploadTheFile;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -109,6 +110,10 @@ class FirstApplicationTests {
 
         System.out.println(a);
     }
+//    @Test
+//    public void testUpload(){
+//        UploadTheFile.TeacherUpload("Mytext","L:\\桌面文件\\plan of winter holiday\\MyFirstProject\\First\\File\\第一个小项目-教务系统.postman_collection.json");
+//    }
 
 
 
