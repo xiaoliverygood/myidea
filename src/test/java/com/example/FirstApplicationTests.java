@@ -7,6 +7,7 @@ import com.example.entity.TeacherResult;
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
+import com.example.service.StudentService;
 import com.example.utils.CaptchaUtil;
 import com.example.utils.EmailRegularExpression;
 import com.example.utils.UploadTheFile;
@@ -97,8 +98,8 @@ class FirstApplicationTests {
     public void testTeacherFindStudent(){
         List<StudentResult> list=teacherMapper.FindMyStudentBytid(1);
         System.out.println(list.get(0));
-        TeacherResult teacherResult=studentMapper.getTeacherBysid(1);
-        System.out.println(teacherResult.getName());
+        List<TeacherResult> teacherResult=studentMapper.getTeacherBysid(1);
+        System.out.println(teacherResult.get(1).getName());
     }
     @Test
     public void testTeacherAddStudent(){
@@ -114,6 +115,12 @@ class FirstApplicationTests {
 //    public void testUpload(){
 //        UploadTheFile.TeacherUpload("Mytext","L:\\桌面文件\\plan of winter holiday\\MyFirstProject\\First\\File\\第一个小项目-教务系统.postman_collection.json");
 //    }
+    @Autowired
+    StudentService studentService;
+    @Test
+    public void testFindMylesson(){
+        System.out.println(studentService.FindMylesson(1));
+    }
 
 
 

@@ -6,6 +6,7 @@ import com.example.mapper.StudentMapper;
 import com.example.request.RequestLoginStudent;
 import com.example.request.RequestRegisterStudent;
 import com.example.response.BaseResponse;
+import com.example.service.StudentService;
 import com.example.utils.CaptchaUtil;
 import com.example.utils.EmailRegularExpression;
 import jakarta.servlet.http.HttpServlet;
@@ -15,11 +16,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/Student")
 public class StudentLoginController {
     @Autowired
     StudentMapper studentMapper;
+    @Autowired
+    StudentService studentService;
     @PostMapping("/register")
     public BaseResponse<Student> register(@RequestBody RequestRegisterStudent register){
             if( CaptchaUtil.code.equals(register.getCode())){
@@ -88,13 +93,25 @@ public class StudentLoginController {
         }
     }
     @GetMapping("/findTeacher")
-    public BaseResponse<TeacherResult> findTeacher(HttpServletRequest httpServletRequest){
+    public BaseResponse<List<TeacherResult>> findTeacher(HttpServletRequest httpServletRequest){
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
             return BaseResponse.Error("请登陆后再进行访问！");
         }else {
+//            List<TeacherResult> listMyTeacher=studentMapper.getTeacherBysid(student.getSid());
            return BaseResponse.success(studentMapper.getTeacherBysid(student.getSid()));
+        }
+    }
+    @GetMapping("/findMylesson")
+    public BaseResponse<List<String>> findMyLesson(HttpServletRequest httpServletRequest){
+        HttpSession httpSession=httpServletRequest.getSession();
+        Student student=(Student) httpSession.getAttribute("User");
+        if(student==null){
+            return BaseResponse.Error("请登陆后再进行访问！");
+        }else {
+//            List<TeacherResult> listMyTeacher=studentMapper.getTeacherBysid(student.getSid());
+            return BaseResponse.success(studentService.FindMylesson(student.getSid()));
         }
     }
 }
