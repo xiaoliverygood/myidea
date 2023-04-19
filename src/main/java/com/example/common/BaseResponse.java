@@ -1,6 +1,5 @@
-package com.example.response;
+package com.example.common;
 
-import com.example.utils.CaptchaUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,9 +1,9 @@
-package com.example.service;
+package com.example.service.impl;
 
-import com.example.entity.TeacherResult;
-import com.example.mapper.AdmitMapper;
+import com.example.model.entity.TeacherResult;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
+import com.example.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
     @Autowired
     StudentMapper studentMapper;

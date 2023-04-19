@@ -1,19 +1,17 @@
 package com.example.controller;
 
-import com.example.entity.Student;
-import com.example.entity.TeacherResult;
+import com.example.model.entity.Student;
+import com.example.model.entity.TeacherResult;
 import com.example.mapper.StudentMapper;
-import com.example.request.RequestLoginStudent;
-import com.example.request.RequestRegisterStudent;
-import com.example.response.BaseResponse;
+import com.example.model.request.RequestLoginStudent;
+import com.example.model.request.RequestRegisterStudent;
+import com.example.common.BaseResponse;
 import com.example.service.StudentService;
 import com.example.utils.CaptchaUtil;
 import com.example.utils.EmailRegularExpression;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

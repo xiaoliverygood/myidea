@@ -1,8 +1,8 @@
 package com.example.controller;
 
-import com.example.entity.Admit;
+import com.example.model.entity.Admit;
 import com.example.mapper.AdmitMapper;
-import com.example.response.BaseResponse;
+import com.example.common.BaseResponse;
 import com.example.service.AdmitService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

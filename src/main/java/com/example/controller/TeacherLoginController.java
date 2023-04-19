@@ -1,13 +1,11 @@
 package com.example.controller;
 
-import com.example.entity.Student;
-import com.example.entity.StudentResult;
-import com.example.entity.Teacher;
+import com.example.model.entity.StudentResult;
+import com.example.model.entity.Teacher;
 import com.example.mapper.TeacherMapper;
-import com.example.request.RequestLoginStudent;
-import com.example.request.RequestLoginTeachger;
-import com.example.request.RequestRegisterTeachger;
-import com.example.response.BaseResponse;
+import com.example.model.request.RequestLoginTeachger;
+import com.example.model.request.RequestRegisterTeachger;
+import com.example.common.BaseResponse;
 import com.example.utils.CaptchaUtil;
 import com.example.utils.EmailRegularExpression;
 import com.example.utils.UploadTheFile;

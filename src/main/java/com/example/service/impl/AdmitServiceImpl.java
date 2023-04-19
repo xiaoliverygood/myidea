@@ -1,13 +1,14 @@
-package com.example.service;
+package com.example.service.impl;
 
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
+import com.example.service.AdmitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AdmitServiceImpl implements AdmitService{
+public class AdmitServiceImpl implements AdmitService {
 
     @Autowired
     StudentMapper studentMapper;

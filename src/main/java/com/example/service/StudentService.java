@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.entity.TeacherResult;
+import com.example.model.entity.TeacherResult;
 
 import java.util.List;
 

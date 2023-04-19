@@ -1,16 +1,15 @@
 package com.example;
 
-import com.example.entity.Student;
-import com.example.entity.StudentResult;
-import com.example.entity.Teacher;
-import com.example.entity.TeacherResult;
+import com.example.model.entity.Student;
+import com.example.model.entity.StudentResult;
+import com.example.model.entity.Teacher;
+import com.example.model.entity.TeacherResult;
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.StudentMapper;
 import com.example.mapper.TeacherMapper;
 import com.example.service.StudentService;
 import com.example.utils.CaptchaUtil;
 import com.example.utils.EmailRegularExpression;
-import com.example.utils.UploadTheFile;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
