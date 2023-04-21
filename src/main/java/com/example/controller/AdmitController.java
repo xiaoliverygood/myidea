@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.common.ResponMessge;
 import com.example.model.entity.Admit;
 import com.example.mapper.AdmitMapper;
 import com.example.common.BaseResponse;
@@ -21,7 +22,7 @@ public class AdmitController {
             Admitsession.setAttribute("AdmitUser",admitMapper.getAdimitById(admin.getId()));
            return BaseResponse.success(admitMapper.getAdimitById(admin.getId()));
         }else {
-            return BaseResponse.Error("用户名或者密码错误");
+            return BaseResponse.Error(ResponMessge.UserOrPasswordError.name());
         }
     }
     @RequestMapping("/logout")
@@ -29,10 +30,10 @@ public class AdmitController {
         HttpSession session = httpServletRequest.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             session.removeAttribute("AdmitUser");
-            return BaseResponse.success("成功退出登录");
+            return BaseResponse.success(ResponMessge.Logoutsuccess.name());
         }
     }
     @Autowired
@@ -42,7 +43,7 @@ public class AdmitController {
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             admitService.TeacherAddStudent(sid,tid);
             return BaseResponse.success("成功添加");
@@ -65,7 +66,7 @@ public class AdmitController {
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             admitService.deleteStudent(sid);
             admitService.TeacherDeleteStudent(sid);
@@ -77,7 +78,7 @@ public class AdmitController {
         HttpSession session = request.getSession();
         Admit admit=(Admit) session.getAttribute("AdmitUser");
         if(admit==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             admitService.deleteTeacher(tid);
             return BaseResponse.success("成功删除老师");

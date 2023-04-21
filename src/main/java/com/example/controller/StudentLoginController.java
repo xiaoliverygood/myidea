@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.common.ResponMessge;
 import com.example.model.entity.Student;
 import com.example.model.entity.TeacherResult;
 import com.example.mapper.StudentMapper;
@@ -31,10 +32,10 @@ public class StudentLoginController {
                     studentMapper.insertStudent(student);
                     return BaseResponse.success(student);
                 }else {
-                    return BaseResponse.Error("邮箱错误");
+                    return BaseResponse.Error(ResponMessge.EmailError.name());
                 }
             }else{
-                return BaseResponse.Error("请求信息出错！");
+                return BaseResponse.Error(ResponMessge.CaptchaError.name());
             }
     }
     @RequestMapping("/login")
@@ -44,7 +45,7 @@ public class StudentLoginController {
             session.setAttribute("User", studentMapper.getStudentById(login.getSid()));
             return BaseResponse.success(studentMapper.getStudentById(login.getSid()));
         }else {
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }
     }
     @PutMapping("/updateName")
@@ -52,7 +53,7 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-           return BaseResponse.Error("请登陆后再进行访问！");
+           return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             studentMapper.UpdateStudentNameById(student.getSid(),newName);
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
@@ -63,7 +64,7 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             studentMapper.UpdateStudentPasswordById(student.getSid(),newPassword);
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
@@ -74,7 +75,7 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             return BaseResponse.success(studentMapper.getStudentById(student.getSid()));
         }
@@ -84,10 +85,10 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
             httpSession.removeAttribute("User");
-            return BaseResponse.success("成功退出登录");
+            return BaseResponse.success(ResponMessge.Logoutsuccess.name());
         }
     }
     @GetMapping("/findTeacher")
@@ -95,7 +96,7 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
 //            List<TeacherResult> listMyTeacher=studentMapper.getTeacherBysid(student.getSid());
            return BaseResponse.success(studentMapper.getTeacherBysid(student.getSid()));
@@ -106,7 +107,7 @@ public class StudentLoginController {
         HttpSession httpSession=httpServletRequest.getSession();
         Student student=(Student) httpSession.getAttribute("User");
         if(student==null){
-            return BaseResponse.Error("请登陆后再进行访问！");
+            return BaseResponse.Error(ResponMessge.NologError.name());
         }else {
 //            List<TeacherResult> listMyTeacher=studentMapper.getTeacherBysid(student.getSid());
             return BaseResponse.success(studentService.FindMylesson(student.getSid()));
