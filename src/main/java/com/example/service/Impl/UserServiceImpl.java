@@ -1,0 +1,15 @@
+package com.example.service.Impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.model.entity.User;
+import com.example.service.UserService;
+import com.example.mapper.UserMapper;
+import org.springframework.stereotype.Service;
+@Service
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{
+
+}
+
+
+
+
