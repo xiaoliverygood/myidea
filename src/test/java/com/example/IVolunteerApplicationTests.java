@@ -24,13 +24,16 @@ class IVolunteerApplicationTests {
         //    private String password;
         //    private String sex;
         //    private Integer time;
-        User user = new User("2834897@qq.com","287ewr","男",12);
+        //User user = new User("2834897@qq.com","287ewr","男",12);
         //userMapper.insert(user);
         // private String email;
         //    private String password;
-        Admit admit=new Admit("2848762983@qq.com","2718782jbca");
-        admitMapper.insert(admit);
+       // Admit admit=new Admit("2848762983@qq.com","2718782jbca");
+        //admitMapper.insert(admit);
+        System.out.println(userMapper.selectById("2834897@qq.com"));
 
     }
+
+
 
 }

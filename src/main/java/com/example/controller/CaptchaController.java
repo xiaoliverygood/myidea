@@ -13,7 +13,7 @@ public class CaptchaController {
     CaptchaUtil captchaUtil;
     @RequestMapping("/captcha")
     public BaseResponse<String> getCaptcha(String emailAddress){
-        captchaUtil.RigisterCode(emailAddress);
+       return BaseResponse.success(captchaUtil.RigisterCode(emailAddress));
     }
 
 }

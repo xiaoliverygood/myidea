@@ -1,19 +1,22 @@
 package com.example.controller;
-
 import com.example.common.BaseResponse;
-import com.example.model.entity.Admit;
-import com.example.model.entity.User;
-import com.example.model.request.AdmitRegister;
+import com.example.model.request.UserLogin;
 import com.example.model.request.UserRegister;
+import com.example.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 @RequestMapping("/User")
 public class UserController {
+    @Autowired
+    UserService userService;
     @RequestMapping("/register")
-    public BaseResponse<User> register(@RequestBody UserRegister userRegister){
-
+    public BaseResponse register(@RequestBody UserRegister userRegister){return userService.userRegister(userRegister);}
+    @RequestMapping("/login")
+    public BaseResponse login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest){
+        return userService.login(userLogin, httpServletRequest);
     }
 }
