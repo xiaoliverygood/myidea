@@ -48,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         HttpSession session=httpServletRequest.getSession();
         User user=(User) session.getAttribute("User-login");
         if(user == null){
-            return BaseResponse.Error(ResponMessge.UserOrPasswordError.getMessage());
+            return BaseResponse.Error(ResponMessge.NologError.getMessage());
         }else {
             user.setPassword(newPassword);
             userMapper.updateById(user);
