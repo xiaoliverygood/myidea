@@ -8,11 +8,11 @@ import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-@TableName(value ="admit")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName(value ="admit")
+
 public class Admit implements Serializable {
     @TableId
     private String email;

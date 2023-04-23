@@ -3,8 +3,11 @@ package com.example.service.Impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.BaseResponse;
 import com.example.common.ResponMessge;
+import com.example.mapper.ActivityMapper;
 import com.example.model.entity.Admit;
+import com.example.model.request.ActivityRequest;
 import com.example.model.request.AdmitRegister;
+import com.example.service.ActivityService;
 import com.example.service.AdmitService;
 import com.example.mapper.AdmitMapper;
 import com.example.utility.CaptchaUtil;
@@ -16,7 +19,12 @@ import org.springframework.stereotype.Service;
 public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements AdmitService{
     @Autowired
     AdmitMapper admitMapper;
-
+    @Autowired
+    CaptchaUtil captchaUtil;
+    @Autowired
+    ActivityMapper activityMapper;
+    @Autowired
+    ActivityService activityService;
     @Override
     public BaseResponse login(Admit admit, HttpServletRequest httpServletRequest) {
         if(admit.getPassword().equals(admitMapper.selectById(admit.getEmail()).getPassword())){
@@ -27,7 +35,6 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
             return BaseResponse.Error(ResponMessge.UserOrPasswordError.getMessage());
         }
     }
-
     @Override
     public BaseResponse register(AdmitRegister admitRegister) {
         if(CaptchaUtil.EmailAndCode.get(admitRegister.getEmail()).equals(admitRegister.getCode())){
@@ -37,6 +44,19 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         }else {
             return BaseResponse.Error(ResponMessge.CaptchaError.getMessage());
         }
+    }
+    @Override
+    public BaseResponse releaseActivity(HttpServletRequest httpServlet, ActivityRequest activityRequest) {
+        HttpSession session=httpServlet.getSession();
+        Admit admit=(Admit) session.getAttribute("User-login");
+       if(admit==null){
+           return BaseResponse.Error(ResponMessge.NologError.getMessage());
+       }else{
+           activityService.addActivity(activityRequest);
+          captchaUtil.ActivitySinginCode(admit.getEmail(),activityMapper.getActivityIdByName(activityRequest.getName()));
+          captchaUtil.ActivitySingOutCode(admit.getEmail(),activityMapper.getActivityIdByName(activityRequest.getName()));
+           return BaseResponse.success("成功发布活动");
+       }
     }
 
     @Override

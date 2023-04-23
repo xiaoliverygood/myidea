@@ -43,13 +43,13 @@ public class CaptchaUtil {
         EmailAndCode.put(aimadress, code);
         return code;
     }
-    public String ActivityCode(String aimadress,Integer id) {
+    public String ActivitySinginCode(String aimadress,Integer id) {
         //SimpleMailMessage是一个比较简易的邮件封装，支持设置一些比较简单内容
         SimpleMailMessage message = new SimpleMailMessage();
         //设置邮件标题
         message.setSubject("【志愿服务系统】");
         //设置邮件内容
-        message.setText("欢迎注册为志愿者，人人为我，我为人人！让我们一起参与志愿服务吧！你的验证码:"+code);
+        message.setText("签到验证码:"+code);
         //设置邮件发送给谁，可以多个，这里就发给你的QQ邮箱
         message.setTo(aimadress);
         //邮件发送者，这里要与配置文件中的保持一致
@@ -57,6 +57,21 @@ public class CaptchaUtil {
         //OK，万事俱备只欠发送
         sender.send(message);
         ActivityAndsigninCode.put(id, code);
+        return code;
+    }
+    public String ActivitySingOutCode(String aimadress,Integer id) {
+        //SimpleMailMessage是一个比较简易的邮件封装，支持设置一些比较简单内容
+        SimpleMailMessage message = new SimpleMailMessage();
+        //设置邮件标题
+        message.setSubject("【志愿服务系统】");
+        //设置邮件内容
+        message.setText("签退验证码:"+code);
+        //设置邮件发送给谁，可以多个，这里就发给你的QQ邮箱
+        message.setTo(aimadress);
+        //邮件发送者，这里要与配置文件中的保持一致
+        message.setFrom("ljz2020comeon@163.com");
+        //OK，万事俱备只欠发送
+        sender.send(message);
         ActivityAndsignoutCode.put(id, code);
         return code;
     }

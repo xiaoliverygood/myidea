@@ -1,6 +1,7 @@
 package com.example.controller;
 import com.example.common.BaseResponse;
 import com.example.model.entity.Admit;
+import com.example.model.request.ActivityRequest;
 import com.example.model.request.AdmitRegister;
 import com.example.service.AdmitService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,5 +25,9 @@ public class AdmitController {
     @RequestMapping("/updataPassword")
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword){
         return admitService.updataPassword(httpServletRequest,newPassword);
+    }
+    @RequestMapping("/releaseActivity")
+    public BaseResponse releaseActivity(HttpServletRequest httpServlet, @RequestBody ActivityRequest activityRequest){
+        return admitService.releaseActivity(httpServlet,activityRequest);
     }
 }
