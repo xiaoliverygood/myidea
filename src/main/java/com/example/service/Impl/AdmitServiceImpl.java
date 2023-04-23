@@ -38,6 +38,19 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
             return BaseResponse.Error(ResponMessge.CaptchaError.getMessage());
         }
     }
+
+    @Override
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String newPassword) {
+       HttpSession session=httpServletRequest.getSession();
+      Admit admit=(Admit) session.getAttribute("User-login");
+      if(admit==null){
+          return BaseResponse.Error(ResponMessge.NologError.getMessage());
+      }else {
+          admit.setPassword(newPassword);
+          admitMapper.updateById(admit);
+          return BaseResponse.success(admit);
+      }
+    }
 }
 
 

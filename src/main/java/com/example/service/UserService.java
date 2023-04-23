@@ -11,4 +11,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserService extends IService<User> {
     BaseResponse userRegister(UserRegister userRegister);
     BaseResponse login(UserLogin userLogin, HttpServletRequest httpServletRequest);
+    BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword);
 }

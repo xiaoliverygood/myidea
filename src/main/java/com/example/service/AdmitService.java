@@ -10,5 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface AdmitService extends IService<Admit> {
     BaseResponse register(AdmitRegister admitRegister);
     BaseResponse login(Admit admit, HttpServletRequest httpServletRequest);
+    BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword);
 
 }

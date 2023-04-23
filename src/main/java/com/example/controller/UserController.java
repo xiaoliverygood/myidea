@@ -19,4 +19,8 @@ public class UserController {
     public BaseResponse login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest){
         return userService.login(userLogin, httpServletRequest);
     }
+    @RequestMapping("/updataPassword")
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword){
+        return userService.updataPassword(httpServletRequest, newPassword);
+    }
 }

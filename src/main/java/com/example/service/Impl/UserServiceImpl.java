@@ -1,5 +1,6 @@
 package com.example.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.BaseResponse;
 import com.example.common.ResponMessge;
@@ -39,6 +40,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }else {
             return BaseResponse.Error(ResponMessge.CaptchaError.getMessage());
         }
+    }
+
+    @Override
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String newPassword) {
+
+        HttpSession session=httpServletRequest.getSession();
+        User user=(User) session.getAttribute("User-login");
+        if(user == null){
+            return BaseResponse.Error(ResponMessge.UserOrPasswordError.getMessage());
+        }else {
+            user.setPassword(newPassword);
+            userMapper.updateById(user);
+            return BaseResponse.success(user);
+        }
+
     }
 }
 

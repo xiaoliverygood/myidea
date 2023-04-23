@@ -21,4 +21,8 @@ public class AdmitController {
     public BaseResponse login(@RequestBody Admit admit, HttpServletRequest httpServletRequest){
         return admitService.login(admit,httpServletRequest);
     }
+    @RequestMapping("/updataPassword")
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword){
+        return admitService.updataPassword(httpServletRequest,newPassword);
+    }
 }
