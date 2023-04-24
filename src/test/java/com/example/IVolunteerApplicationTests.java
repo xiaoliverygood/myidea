@@ -4,6 +4,7 @@ import com.example.mapper.ActivityMapper;
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.UserMapper;
 import com.example.model.entity.Activity;
+import com.example.model.entity.User;
 import com.example.utility.DateTranslation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,9 @@ class IVolunteerApplicationTests {
     }
     @Test
     public void test8(){
-        Date date=new Date();
-        userMapper.UserSingOut(date,1,"jqid");
+        User user = new User("2834897@qq.com",null,null,null);
+        user.setTime(9098L);
+        userMapper.updateById(user);
     }
+
 }

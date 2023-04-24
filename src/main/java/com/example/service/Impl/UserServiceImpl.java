@@ -1,6 +1,5 @@
 package com.example.service.Impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.BaseResponse;
 import com.example.common.ResponMessge;
@@ -12,11 +11,14 @@ import com.example.model.request.UserRegister;
 import com.example.service.UserService;
 import com.example.mapper.UserMapper;
 import com.example.utility.CaptchaUtil;
+import com.example.utility.DateTranslation;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Service
@@ -113,6 +115,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             if(correctCode.equals(SingOutCode)){
                 Date date=new Date();
                 userMapper.UserSingOut(date,activityMapper.getActivityIdByName(Name),user.getEmail());
+                Date dateSingIn=userMapper.SignInTimeByUserEmailandId(activityMapper.getActivityIdByName(Name),user.getEmail());
+                LocalDateTime BeginTime= DateTranslation.DateTranslationLocalDateTime(date);
+                LocalDateTime EndTime= DateTranslation.DateTranslationLocalDateTime(dateSingIn);
+                Duration duration = Duration.between(BeginTime,EndTime);
+                long TimeDuration=duration.toHours();
+                long Timetotal=user.getTime()+TimeDuration;
+                user.setTime(Timetotal);
+                userMapper.updateById(user);
                 return BaseResponse.success("签退成功！");
             }else {
                 return BaseResponse.Error("签退失败，签退码错误！");

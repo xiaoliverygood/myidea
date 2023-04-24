@@ -9,18 +9,39 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 
+ * @TableName user
+ */
 @TableName(value ="user")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {
+    /**
+     * 
+     */
     @TableId
     private String email;
+
+    /**
+     * 
+     */
     private String password;
+
+    /**
+     * 
+     */
     private String sex;
-    private Integer time;
+
+    /**
+     * 
+     */
+    private Long time;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -38,6 +59,7 @@ public class User implements Serializable {
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
             && (this.getTime() == null ? other.getTime() == null : this.getTime().equals(other.getTime()));
     }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -48,6 +70,7 @@ public class User implements Serializable {
         result = prime * result + ((getTime() == null) ? 0 : getTime().hashCode());
         return result;
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

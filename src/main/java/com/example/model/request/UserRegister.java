@@ -11,6 +11,6 @@ public class UserRegister {
     private String email;
     private String password;
     private String sex;
-    private Integer time;
+    private Long time;
     private String Code;
 }
