@@ -66,4 +66,14 @@ class IVolunteerApplicationTests {
         System.out.println(DateTranslation.DateTranslationLocalDateTime(date));
         System.out.println(LocalDateTime.of(2028, 11, 29, 21, 34, 11));
     }
+    @Test
+    public void test7(){
+        Date date=new Date();
+        userMapper.UserSingIn(date,1,"jqid");
+    }
+    @Test
+    public void test8(){
+        Date date=new Date();
+        userMapper.UserSingOut(date,1,"jqid");
+    }
 }

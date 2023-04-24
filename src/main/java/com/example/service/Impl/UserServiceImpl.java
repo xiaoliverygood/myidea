@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.BaseResponse;
 import com.example.common.ResponMessge;
+import com.example.mapper.ActivityMapper;
+import com.example.model.entity.Activity;
 import com.example.model.entity.User;
 import com.example.model.request.UserLogin;
 import com.example.model.request.UserRegister;
@@ -14,10 +16,53 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    ActivityMapper activityMapper;
+
+    @Override
+    public BaseResponse applyActivity(HttpServletRequest httpServletRequest, String nameActivity) {
+        HttpSession session=httpServletRequest.getSession();
+        User user=(User) session.getAttribute("User-login");
+        if(user==null){
+            return BaseResponse.Error(ResponMessge.NologError.getMessage());
+        }else{
+            Date currentDate = new Date();
+            Activity activity= activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity));
+            int flag=activity.getBeginTime().compareTo(currentDate);
+            if(flag>=0){//这样子开始时间比现在迟才能报名，也就是begin时间-现在时间大于零
+                userMapper.UserLinkActivity(activity.getId(),user.getEmail(),"No",null,null);
+                return BaseResponse.success("报名成功");
+            }else{
+                return BaseResponse.Error("活动已经开始或或者结束了，报名失败！");
+            }
+
+        }
+    }
+
+    @Override//为完成的功能
+    public BaseResponse singinActivity(HttpServletRequest httpServletRequest, String SinginCode,String Name) {
+       HttpSession session=httpServletRequest.getSession();
+        User user=(User) session.getAttribute("User-login");
+        if(user==null){
+            return BaseResponse.Error(ResponMessge.NologError.getMessage());
+        }else{
+            String correctCode=CaptchaUtil.ActivityAndsigninCode.get(activityMapper.getActivityIdByName(Name));
+            if(correctCode.equals(SinginCode)){
+                Date date=new Date();
+                userMapper.UserSingIn(date, activityMapper.getActivityIdByName(Name),user.getEmail() );
+                return BaseResponse.success("签到成功！");
+            }else {
+                return BaseResponse.Error("签到码错误");
+            }
+        }
+    }
 
     @Override
     public BaseResponse login(UserLogin userLogin, HttpServletRequest httpServletRequest) {

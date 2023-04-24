@@ -23,4 +23,13 @@ public class UserController {
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword){
         return userService.updataPassword(httpServletRequest, newPassword);
     }
+    @RequestMapping("applyActivity")
+    public BaseResponse applyActivity(HttpServletRequest httpServletRequest,String nameActivity){
+        return userService.applyActivity(httpServletRequest,nameActivity);
+    }
+    @RequestMapping("/singinActivity")
+    public BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,String Name){
+        return userService.singinActivity(httpServletRequest,SinginCode,Name);
+    }
+
 }

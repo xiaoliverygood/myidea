@@ -19,7 +19,6 @@ public class Activity implements Serializable {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String name;
-
     private Integer time;
     private Date beginTime;
     private Date lateTime;
