@@ -123,6 +123,17 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
            return BaseResponse.success(myActivity);
         }
     }
+
+    @Override
+    public BaseResponse showMyMessage(HttpServletRequest httpServlet) {
+        HttpSession session=httpServlet.getSession();
+        Admit admit=(Admit) session.getAttribute("User-login");
+        if(admit==null){
+            return BaseResponse.Error(ResponMessge.NologError);
+        }else{
+            return BaseResponse.success(admit);
+        }
+    }
 }
 
 

@@ -39,5 +39,9 @@ public class UserController {
     public BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest){
        return userService.findMyAllActivity(httpServletRequest);
     }
+    @RequestMapping("/showMyMessage")
+    public BaseResponse showMyMessage(HttpServletRequest httpServletRequest){
+       return userService.showMyMessage(httpServletRequest);
+    }
 
 }

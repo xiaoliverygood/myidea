@@ -43,4 +43,8 @@ public class AdmitController {
     public BaseResponse findMyActivityUser(HttpServletRequest httpServlet,int id){
         return admitService.findMyActivityUser(httpServlet,id);
     }
+    @RequestMapping("/showMyMessage")
+    public BaseResponse showMyMessage(HttpServletRequest httpServlet){
+        return admitService.showMyMessage(httpServlet);
+    }
 }

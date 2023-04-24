@@ -15,6 +15,6 @@ public class BaseResponse<T> {
         return new BaseResponse(200,data,"ok");
     }
     public static <T>BaseResponse<T>Error(T data){
-        return new BaseResponse(200,data,"ok");
+        return new BaseResponse(400,data,"error");
     }
 }
