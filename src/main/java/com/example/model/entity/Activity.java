@@ -4,59 +4,29 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value ="activity")
 @Data
 public class Activity implements Serializable {
-    /**
-     * 
-     */
     @TableId(type = IdType.AUTO)
     private Integer id;
-
-    /**
-     * 
-     */
-
     private String name;
 
-    /**
-     * 
-     */
     private Integer time;
-
-    /**
-     * 
-     */
     private Date beginTime;
-
-    /**
-     * 
-     */
     private Date lateTime;
-
-    /**
-     * 
-     */
     private String location;
-
-    /**
-     * 
-     */
     private Integer maxpeople;
+    private String belongingAdimit;
 
-    @Serial
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -76,9 +46,10 @@ public class Activity implements Serializable {
             && (this.getName() == null ? other.getName() == null : this.getName().equals(other.getName()))
             && (this.getTime() == null ? other.getTime() == null : this.getTime().equals(other.getTime()))
             && (this.getBeginTime() == null ? other.getBeginTime() == null : this.getBeginTime().equals(other.getBeginTime()))
-            && (this.getBeginTime() == null ? other.getBeginTime() == null : this.getBeginTime().equals(other.getBeginTime()))
+            && (this.getLateTime() == null ? other.getLateTime() == null : this.getLateTime().equals(other.getLateTime()))
             && (this.getLocation() == null ? other.getLocation() == null : this.getLocation().equals(other.getLocation()))
-            && (this.getMaxpeople() == null ? other.getMaxpeople() == null : this.getMaxpeople().equals(other.getMaxpeople()));
+            && (this.getMaxpeople() == null ? other.getMaxpeople() == null : this.getMaxpeople().equals(other.getMaxpeople()))
+            && (this.getBelongingAdimit() == null ? other.getBelongingAdimit() == null : this.getBelongingAdimit().equals(other.getBelongingAdimit()));
     }
 
     @Override
@@ -89,9 +60,10 @@ public class Activity implements Serializable {
         result = prime * result + ((getName() == null) ? 0 : getName().hashCode());
         result = prime * result + ((getTime() == null) ? 0 : getTime().hashCode());
         result = prime * result + ((getBeginTime() == null) ? 0 : getBeginTime().hashCode());
-        result = prime * result + (( getLateTime() == null) ? 0 : getLateTime().hashCode());
+        result = prime * result + ((getLateTime() == null) ? 0 : getLateTime().hashCode());
         result = prime * result + ((getLocation() == null) ? 0 : getLocation().hashCode());
         result = prime * result + ((getMaxpeople() == null) ? 0 : getMaxpeople().hashCode());
+        result = prime * result + ((getBelongingAdimit() == null) ? 0 : getBelongingAdimit().hashCode());
         return result;
     }
 
@@ -108,6 +80,7 @@ public class Activity implements Serializable {
         sb.append(", lateTime=").append(lateTime);
         sb.append(", location=").append(location);
         sb.append(", maxpeople=").append(maxpeople);
+        sb.append(", belongingAdimit=").append(belongingAdimit);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

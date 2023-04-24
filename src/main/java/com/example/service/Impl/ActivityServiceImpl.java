@@ -5,13 +5,10 @@ import com.example.mapper.ActivityMapper;
 import com.example.model.entity.Activity;
 import com.example.model.request.ActivityRequest;
 import com.example.service.ActivityService;
-import com.example.utility.CaptchaUtil;
 import com.example.utility.DateTranslation;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.ZoneOffset;
 import java.util.Date;
 
 
@@ -21,11 +18,18 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     ActivityMapper activityMapper;
 
     @Override
-    public void addActivity(ActivityRequest activityRequest) {
+    public Boolean addActivity(ActivityRequest activityRequest,String admitEmail) {
         Date BeaginData = DateTranslation.localDateTimeTransformDate(activityRequest.getBeginTime());
         Date EndData = DateTranslation.localDateTimeTransformDate(activityRequest.getLateTime());
-        Activity activity=new Activity(null,activityRequest.getName(),activityRequest.getTime(),BeaginData,EndData,activityRequest.getLocation(),activityRequest.getMaxpeople());
+        Activity activity=new Activity(null,activityRequest.getName(),activityRequest.getTime(),BeaginData,EndData,activityRequest.getLocation(),activityRequest.getMaxpeople(),admitEmail);
         activityMapper.insert(activity);
+        return true;
+    }
+
+    @Override
+    public Boolean removeActivity(Integer idActivity) {
+        activityMapper.deleteById(idActivity);
+        return true;
     }
 }
 

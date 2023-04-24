@@ -7,6 +7,7 @@ import com.example.mapper.ActivityMapper;
 import com.example.model.entity.Admit;
 import com.example.model.request.ActivityRequest;
 import com.example.model.request.AdmitRegister;
+import com.example.model.request.DeleteActivityRequest;
 import com.example.service.ActivityService;
 import com.example.service.AdmitService;
 import com.example.mapper.AdmitMapper;
@@ -52,10 +53,30 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
        if(admit==null){
            return BaseResponse.Error(ResponMessge.NologError.getMessage());
        }else{
-           activityService.addActivity(activityRequest);
-          captchaUtil.ActivitySinginCode(admit.getEmail(),activityMapper.getActivityIdByName(activityRequest.getName()));
-          captchaUtil.ActivitySingOutCode(admit.getEmail(),activityMapper.getActivityIdByName(activityRequest.getName()));
-           return BaseResponse.success("成功发布活动");
+          Boolean addSuccess= activityService.addActivity(activityRequest,admit.getEmail());
+          if(addSuccess){
+              captchaUtil.ActivitySinginCode(admit.getEmail(),activityMapper.getActivityIdByName(activityRequest.getName()));
+              captchaUtil.ActivitySingOutCode(admit.getEmail(),activityMapper.getActivityIdByName(activityRequest.getName()));
+              return BaseResponse.success("成功发布活动");
+          }else {
+              return BaseResponse.Error("验证码发送失败");
+          }
+       }
+    }
+
+    @Override
+    public BaseResponse deleteActivity(HttpServletRequest httpServlet, DeleteActivityRequest deleteActivityRequest) {
+       HttpSession session=httpServlet.getSession();
+       Admit admit=(Admit) session.getAttribute("User-login");
+       if(admit==null){
+           return BaseResponse.Error(ResponMessge.NologError.getMessage());
+       }else{
+           Boolean removeSuccess=activityService.removeActivity(activityMapper.getActivityIdByName(deleteActivityRequest.getActivityName()));
+           if(removeSuccess){
+               return BaseResponse.success("删除成功！");
+           }else {
+               return BaseResponse.Error("删除失败");
+           }
        }
     }
 

@@ -4,13 +4,11 @@ import com.example.mapper.ActivityMapper;
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.UserMapper;
 import com.example.model.entity.Activity;
-import com.example.utility.CaptchaUtil;
 import com.example.utility.DateTranslation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -48,7 +46,7 @@ class IVolunteerApplicationTests {
       Instant instant =LocalDateTime.of(2023,5,20,12,55).toInstant(ZoneOffset.ofHours(8));
 
       Date date =new Date();
-        Activity activity=new Activity(null,"6666",3,Date.from(instant),Date.from(instant),"gz",10);
+        Activity activity=new Activity(null,"6666",3,Date.from(instant),Date.from(instant),"gz",10,"282748@qq.com");
 
         activityMapper.insert(activity);
 //        System.out.println(activityMapper.selectById(1));

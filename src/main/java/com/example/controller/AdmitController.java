@@ -3,6 +3,7 @@ import com.example.common.BaseResponse;
 import com.example.model.entity.Admit;
 import com.example.model.request.ActivityRequest;
 import com.example.model.request.AdmitRegister;
+import com.example.model.request.DeleteActivityRequest;
 import com.example.service.AdmitService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,5 +30,10 @@ public class AdmitController {
     @RequestMapping("/releaseActivity")
     public BaseResponse releaseActivity(HttpServletRequest httpServlet, @RequestBody ActivityRequest activityRequest){
         return admitService.releaseActivity(httpServlet,activityRequest);
+    }
+    @RequestMapping("/deleteActivity")
+    public BaseResponse deleteActivity(HttpServletRequest httpServlet, @RequestBody DeleteActivityRequest deleteActivityRequest){
+
+        return admitService.deleteActivity(httpServlet,deleteActivityRequest);
     }
 }
