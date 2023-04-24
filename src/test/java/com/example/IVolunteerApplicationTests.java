@@ -5,6 +5,7 @@ import com.example.mapper.AdmitMapper;
 import com.example.mapper.UserMapper;
 import com.example.model.entity.Activity;
 import com.example.utility.CaptchaUtil;
+import com.example.utility.DateTranslation;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -58,4 +59,13 @@ class IVolunteerApplicationTests {
         System.out.println(activityMapper.getActivityIdByName("6666"));
     }
 
+    @Test
+    public void test6(){
+        System.out.println(DateTranslation.localDateTimeTransformDate(LocalDateTime.of(2022, 11, 29, 21, 34, 11)));
+        Date date=new Date();
+        date.setTime(20019);
+        System.out.println(date.getTime());
+        System.out.println(DateTranslation.DateTranslationLocalDateTime(date));
+        System.out.println(LocalDateTime.of(2028, 11, 29, 21, 34, 11));
+    }
 }

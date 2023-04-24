@@ -6,6 +6,7 @@ import com.example.model.entity.Activity;
 import com.example.model.request.ActivityRequest;
 import com.example.service.ActivityService;
 import com.example.utility.CaptchaUtil;
+import com.example.utility.DateTranslation;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +22,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
 
     @Override
     public void addActivity(ActivityRequest activityRequest) {
-        Date BeaginData = Date.from(activityRequest.getBeginTime().toInstant(ZoneOffset.ofHours(8)));
-        Date EndData = Date.from(activityRequest.getLateTime().toInstant(ZoneOffset.ofHours(8)));
+        Date BeaginData = DateTranslation.localDateTimeTransformDate(activityRequest.getBeginTime());
+        Date EndData = DateTranslation.localDateTimeTransformDate(activityRequest.getLateTime());
         Activity activity=new Activity(null,activityRequest.getName(),activityRequest.getTime(),BeaginData,EndData,activityRequest.getLocation(),activityRequest.getMaxpeople());
         activityMapper.insert(activity);
     }
