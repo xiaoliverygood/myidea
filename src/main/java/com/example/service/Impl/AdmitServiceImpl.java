@@ -1,9 +1,11 @@
 package com.example.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.BaseResponse;
 import com.example.common.ResponMessge;
 import com.example.mapper.ActivityMapper;
+import com.example.model.entity.Activity;
 import com.example.model.entity.Admit;
 import com.example.model.request.ActivityRequest;
 import com.example.model.request.AdmitRegister;
@@ -16,6 +18,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements AdmitService{
     @Autowired
@@ -91,6 +96,32 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
           admitMapper.updateById(admit);
           return BaseResponse.success(admit);
       }
+    }
+
+    @Override
+    public BaseResponse findMyActivity(HttpServletRequest httpServlet) {
+        HttpSession session=httpServlet.getSession();
+        Admit admit=(Admit) session.getAttribute("User-login");
+        if(admit==null){
+            return BaseResponse.Error(ResponMessge.NologError);
+        }else {
+            QueryWrapper<Activity> queryWrapper=new QueryWrapper<>();
+            queryWrapper.eq("belongingAdimit",admit.getEmail());
+            List<Activity> myActivity=activityMapper.selectList(queryWrapper);
+            return BaseResponse.success(myActivity);
+        }
+    }
+
+    @Override
+    public BaseResponse findMyActivityUser(HttpServletRequest httpServlet, int id) {
+        HttpSession session=httpServlet.getSession();
+        Admit admit=(Admit) session.getAttribute("User-login");
+        if(admit==null){
+            return BaseResponse.Error(ResponMessge.NologError);
+        }else {
+           List<String> myActivity= activityMapper.getActivityUserById(id);
+           return BaseResponse.success(myActivity);
+        }
     }
 }
 

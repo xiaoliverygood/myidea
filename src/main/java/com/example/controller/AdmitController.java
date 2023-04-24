@@ -35,4 +35,12 @@ public class AdmitController {
     public BaseResponse deleteActivity(HttpServletRequest httpServlet, @RequestBody DeleteActivityRequest deleteActivityRequest){
         return admitService.deleteActivity(httpServlet,deleteActivityRequest);
     }
+    @RequestMapping("/findMyActivity")
+    public BaseResponse findMyActivity(HttpServletRequest httpServlet){
+        return admitService.findMyActivity(httpServlet);
+    }
+    @RequestMapping("/findMyActivityUser")
+    public BaseResponse findMyActivityUser(HttpServletRequest httpServlet,int id){
+        return admitService.findMyActivityUser(httpServlet,id);
+    }
 }

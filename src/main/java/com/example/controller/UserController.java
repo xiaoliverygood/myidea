@@ -35,5 +35,9 @@ public class UserController {
     public BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,String Name){
         return userService.singoutActivity(httpServletRequest,SingOutCode,Name);
     }
+    @RequestMapping("/findMyAllActivity")
+    public BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest){
+       return userService.findMyAllActivity(httpServletRequest);
+    }
 
 }

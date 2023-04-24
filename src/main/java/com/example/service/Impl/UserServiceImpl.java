@@ -130,6 +130,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
     }
+
+    @Override
+    public BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest) {
+        HttpSession session=httpServletRequest.getSession();
+        User user=(User) session.getAttribute("User-login");
+        if(user==null){
+            return BaseResponse.Error(ResponMessge.NologError);
+        }else{
+           return BaseResponse.success(userMapper.findMyAllActivity(user.getEmail()));
+        }
+
+    }
 }
 
 
