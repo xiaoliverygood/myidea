@@ -33,7 +33,6 @@ public class AdmitController {
     }
     @RequestMapping("/deleteActivity")
     public BaseResponse deleteActivity(HttpServletRequest httpServlet, @RequestBody DeleteActivityRequest deleteActivityRequest){
-
         return admitService.deleteActivity(httpServlet,deleteActivityRequest);
     }
 }
