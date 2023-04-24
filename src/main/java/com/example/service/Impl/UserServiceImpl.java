@@ -101,6 +101,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
     }
+
+    @Override
+    public BaseResponse singoutActivity(HttpServletRequest httpServletRequest, String SingOutCode, String Name) {
+        HttpSession session=httpServletRequest.getSession();
+        User user=(User) session.getAttribute("User-login");
+        if(user==null){
+            return BaseResponse.Error(ResponMessge.NologError);
+        }else {
+            String correctCode=CaptchaUtil.ActivityAndsignoutCode.get(activityMapper.getActivityIdByName(Name));
+            if(correctCode.equals(SingOutCode)){
+                Date date=new Date();
+                userMapper.UserSingOut(date,activityMapper.getActivityIdByName(Name),user.getEmail());
+                return BaseResponse.success("签退成功！");
+            }else {
+                return BaseResponse.Error("签退失败，签退码错误！");
+            }
+        }
+
+    }
 }
 
 

@@ -14,4 +14,5 @@ public interface UserService extends IService<User> {
     BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword);
     BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,String Name);
     BaseResponse applyActivity(HttpServletRequest httpServletRequest,String nameActivity);
+    BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,String Name);
 }

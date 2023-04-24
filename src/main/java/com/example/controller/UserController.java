@@ -31,5 +31,9 @@ public class UserController {
     public BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,String Name){
         return userService.singinActivity(httpServletRequest,SinginCode,Name);
     }
+    @RequestMapping("/singoutActivity")
+    public BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,String Name){
+        return userService.singoutActivity(httpServletRequest,SingOutCode,Name);
+    }
 
 }
