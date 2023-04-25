@@ -23,7 +23,7 @@ public class UserController {
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword){
         return userService.updataPassword(httpServletRequest, newPassword);
     }
-    @RequestMapping("applyActivity")
+    @RequestMapping("/applyActivity")
     public BaseResponse applyActivity(HttpServletRequest httpServletRequest,String nameActivity){
         return userService.applyActivity(httpServletRequest,nameActivity);
     }
