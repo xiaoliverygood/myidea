@@ -8,4 +8,5 @@ import java.util.List;
 public interface VolunteerSquareService {
     BaseResponse<List<Activity>> showAllActivity();
     BaseResponse searchByname(String name);
+    BaseResponse searchLike(String nameLike);
 }

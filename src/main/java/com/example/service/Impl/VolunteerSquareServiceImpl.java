@@ -28,4 +28,10 @@ public class VolunteerSquareServiceImpl implements VolunteerSquareService {
         queryWrapper.isNotNull("name");
        return BaseResponse.success(activityMapper.selectList(queryWrapper));
     }
+
+    @Override
+    public BaseResponse searchLike(String nameLike) {
+        List<Activity> activityList = activityMapper.selectResult(nameLike);
+        return BaseResponse.success(activityList);
+    }
 }

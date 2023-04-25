@@ -14,6 +14,8 @@ public interface ActivityMapper extends BaseMapper<Activity> {
     public Integer getActivityIdByName(String name);
     @Select("select userEmail from LinkActirity where id=#{id}")
     public List<String> getActivityUserById(@Param("id") int id);
+    @Select("SELECT * FROM activity WHERE name LIKE #{nameLike}")
+    public List<Activity> selectResult(@Param("nameLike") String nameLike);
 }
 
 

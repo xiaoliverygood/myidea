@@ -22,4 +22,8 @@ public class VolunteerSquareController {
     public BaseResponse searchByname(String name){
        return volunteerSquareService.searchByname(name);
     }
+    @RequestMapping("/searchLike")
+    public BaseResponse searchLike(String nameLike){
+        return volunteerSquareService.searchLike(nameLike);
+    }
 }
