@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Autowired
     UserMapper userMapper;
     @Autowired
@@ -31,24 +31,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse applyActivity(HttpServletRequest httpServletRequest, String nameActivity) {
-        HttpSession session=httpServletRequest.getSession();
-        User user=(User) session.getAttribute("User-login");
-        if(user==null){
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("User-login");
+        if (user == null) {
             return BaseResponse.Error(ResponMessge.NologError.getMessage());
-        }else{
+        } else {
             Date currentDate = new Date();
-            Activity activity= activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity));
-            int flag=activity.getBeginTime().compareTo(currentDate);
-            if(flag>=0){//这样子开始时间比现在迟才能报名，也就是begin时间-现在时间大于零
-               List<String> listUser=activityMapper.getActivityUserById(activityMapper.getActivityIdByName(nameActivity));
-               int listmanyUser=listUser.size();
-               if(listmanyUser<activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity)).getMaxpeople()){
-                   userMapper.UserLinkActivity(activity.getId(),user.getEmail(),"No",null,null);
-                   return BaseResponse.success("报名成功");
-               }else {
-                   return BaseResponse.success("活动已经满人！");
-               }
-            }else{
+            Activity activity = activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity));
+            int flag = activity.getBeginTime().compareTo(currentDate);
+            if (flag >= 0) {//这样子开始时间比现在迟才能报名，也就是begin时间-现在时间大于零
+                List<String> listUser = activityMapper.getActivityUserById(activityMapper.getActivityIdByName(nameActivity));
+                int listmanyUser = listUser.size();
+                if (listmanyUser < activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity)).getMaxpeople()) {
+                    userMapper.UserLinkActivity(activity.getId(), user.getEmail(), "No", null, null);
+                    return BaseResponse.success("报名成功");
+                } else {
+                    return BaseResponse.success("活动已经满人！");
+                }
+            } else {
                 return BaseResponse.Error("活动已经开始或或者结束了，报名失败！");
             }
 
@@ -56,18 +56,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public BaseResponse singinActivity(HttpServletRequest httpServletRequest, String SinginCode,String Name) {
-       HttpSession session=httpServletRequest.getSession();
-        User user=(User) session.getAttribute("User-login");
-        if(user==null){
+    public BaseResponse singinActivity(HttpServletRequest httpServletRequest, String SinginCode, String Name) {
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("User-login");
+        if (user == null) {
             return BaseResponse.Error(ResponMessge.NologError.getMessage());
-        }else{
-            String correctCode=CaptchaUtil.ActivityAndsigninCode.get(activityMapper.getActivityIdByName(Name));
-            if(correctCode.equals(SinginCode)){
-                Date date=new Date();
-                userMapper.UserSingIn(date, activityMapper.getActivityIdByName(Name),user.getEmail() );
+        } else {
+            String correctCode = CaptchaUtil.ActivityAndsigninCode.get(activityMapper.getActivityIdByName(Name));
+            if (correctCode.equals(SinginCode)) {
+                Date date = new Date();
+                userMapper.UserSingIn(date, activityMapper.getActivityIdByName(Name), user.getEmail());
                 return BaseResponse.success("签到成功！");
-            }else {
+            } else {
                 return BaseResponse.Error("签到码错误");
             }
         }
@@ -75,23 +75,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse login(UserLogin userLogin, HttpServletRequest httpServletRequest) {
-        if(userLogin.getPassword().equals(userMapper.selectById(userLogin.getEmail()).getPassword())){
+        if (userLogin.getPassword().equals(userMapper.selectById(userLogin.getEmail()).getPassword())) {
             User user = userMapper.selectById(userLogin.getEmail());
-            HttpSession session=httpServletRequest.getSession();
-            session.setAttribute("User-login",user);
+            HttpSession session = httpServletRequest.getSession();
+            session.setAttribute("User-login", user);
             return BaseResponse.success(user);
-        }else {
+        } else {
             return BaseResponse.Error(ResponMessge.UserOrPasswordError);
         }
     }
 
     @Override
     public BaseResponse userRegister(UserRegister userRegister) {
-        if(CaptchaUtil.EmailAndCode.get(userRegister.getEmail()).equals(userRegister.getCode())){
-            User register=new User(userRegister.getEmail(), userRegister.getPassword(), userRegister.getSex(), userRegister.getTime());
+        if (CaptchaUtil.EmailAndCode.get(userRegister.getEmail()).equals(userRegister.getCode())) {
+            User register = new User(userRegister.getEmail(), userRegister.getPassword(), userRegister.getSex(), userRegister.getTime());
             userMapper.insert(register);
             return BaseResponse.success("成功注册！");
-        }else {
+        } else {
             return BaseResponse.Error(ResponMessge.CaptchaError.getMessage());
         }
     }
@@ -99,11 +99,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String newPassword) {
 
-        HttpSession session=httpServletRequest.getSession();
-        User user=(User) session.getAttribute("User-login");
-        if(user == null){
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("User-login");
+        if (user == null) {
             return BaseResponse.Error(ResponMessge.NologError.getMessage());
-        }else {
+        } else {
             user.setPassword(newPassword);
             userMapper.updateById(user);
             return BaseResponse.success(user);
@@ -113,25 +113,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse singoutActivity(HttpServletRequest httpServletRequest, String SingOutCode, String Name) {
-        HttpSession session=httpServletRequest.getSession();
-        User user=(User) session.getAttribute("User-login");
-        if(user==null){
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("User-login");
+        if (user == null) {
             return BaseResponse.Error(ResponMessge.NologError);
-        }else {
-            String correctCode=CaptchaUtil.ActivityAndsignoutCode.get(activityMapper.getActivityIdByName(Name));
-            if(correctCode.equals(SingOutCode)){
-                Date date=new Date();
-                userMapper.UserSingOut(date,activityMapper.getActivityIdByName(Name),user.getEmail());
-                Date dateSingIn=userMapper.SignInTimeByUserEmailandId(activityMapper.getActivityIdByName(Name),user.getEmail());
-                LocalDateTime BeginTime= DateTranslation.DateTranslationLocalDateTime(date);
-                LocalDateTime EndTime= DateTranslation.DateTranslationLocalDateTime(dateSingIn);
-                Duration duration = Duration.between(EndTime,BeginTime);
-                long TimeDuration=duration.toMinutes();//以分钟作为计算单位
-                long Timetotal=user.getTime()+TimeDuration;
+        } else {
+            String correctCode = CaptchaUtil.ActivityAndsignoutCode.get(activityMapper.getActivityIdByName(Name));
+            if (correctCode.equals(SingOutCode)) {
+                Date date = new Date();
+                userMapper.UserSingOut(date, activityMapper.getActivityIdByName(Name), user.getEmail());
+                Date dateSingIn = userMapper.SignInTimeByUserEmailandId(activityMapper.getActivityIdByName(Name), user.getEmail());
+                LocalDateTime BeginTime = DateTranslation.DateTranslationLocalDateTime(date);
+                LocalDateTime EndTime = DateTranslation.DateTranslationLocalDateTime(dateSingIn);
+                Duration duration = Duration.between(EndTime, BeginTime);
+                long TimeDuration = duration.toMinutes();//以分钟作为计算单位
+                long Timetotal = user.getTime() + TimeDuration;
                 user.setTime(Timetotal);
                 userMapper.updateById(user);
                 return BaseResponse.success("签退成功！");
-            }else {
+            } else {
                 return BaseResponse.Error("签退失败，签退码错误！");
             }
         }
@@ -140,34 +140,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse showMyMessage(HttpServletRequest httpServletRequest) {
-        HttpSession session=httpServletRequest.getSession();
-        User user=(User) session.getAttribute("User-login");
-        if(user==null){
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("User-login");
+        if (user == null) {
             return BaseResponse.Error(ResponMessge.NologError);
-        }else{
-         return BaseResponse.success(user);
+        } else {
+            return BaseResponse.success(user);
         }
     }
 
     @Override
     public BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest) {
-        HttpSession session=httpServletRequest.getSession();
-        User user=(User) session.getAttribute("User-login");
-        if(user==null){
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("User-login");
+        if (user == null) {
             return BaseResponse.Error(ResponMessge.NologError);
-        }else{
-           return BaseResponse.success(userMapper.findMyAllActivity(user.getEmail()));
+        } else {
+            return BaseResponse.success(userMapper.findMyAllActivity(user.getEmail()));
         }
 
     }
 
     @Override
     public BaseResponse logout(HttpServletRequest httpServletRequest) {
-        HttpSession session=httpServletRequest.getSession();
-        User user=(User) session.getAttribute("User-login");
-        if(user==null){
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("User-login");
+        if (user == null) {
             return BaseResponse.Error(ResponMessge.NologError);
-        }else {
+        } else {
             session.removeAttribute("User-login");
             return BaseResponse.success(ResponMessge.Logoutsuccess);
         }
