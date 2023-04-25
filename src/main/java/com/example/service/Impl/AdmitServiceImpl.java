@@ -134,6 +134,18 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
             return BaseResponse.success(admit);
         }
     }
+
+    @Override
+    public BaseResponse logout(HttpServletRequest httpServlet) {
+        HttpSession session=httpServlet.getSession();
+        Admit admit=(Admit) session.getAttribute("User-login");
+        if(admit==null){
+            return BaseResponse.Error(ResponMessge.NologError);
+        }else{
+            session.removeAttribute("User-login");
+            return BaseResponse.success(ResponMessge.Logoutsuccess);
+        }
+    }
 }
 
 

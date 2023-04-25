@@ -43,5 +43,9 @@ public class UserController {
     public BaseResponse showMyMessage(HttpServletRequest httpServletRequest){
        return userService.showMyMessage(httpServletRequest);
     }
+    @RequestMapping("/logout")
+    public BaseResponse logout(HttpServletRequest httpServletRequest){
+        return userService.logout(httpServletRequest);
+    }
 
 }

@@ -16,4 +16,5 @@ public interface UserService extends IService<User> {
     BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,String Name);
     BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest);
     BaseResponse showMyMessage(HttpServletRequest httpServletRequest);
+    BaseResponse logout(HttpServletRequest httpServletRequest);
 }

@@ -47,4 +47,8 @@ public class AdmitController {
     public BaseResponse showMyMessage(HttpServletRequest httpServlet){
         return admitService.showMyMessage(httpServlet);
     }
+    @RequestMapping("/logout")
+    public BaseResponse logout(HttpServletRequest httpServlet){
+        return admitService.logout(httpServlet);
+    }
 }

@@ -153,6 +153,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
     }
+
+    @Override
+    public BaseResponse logout(HttpServletRequest httpServletRequest) {
+        HttpSession session=httpServletRequest.getSession();
+        User user=(User) session.getAttribute("User-login");
+        if(user==null){
+            return BaseResponse.Error(ResponMessge.NologError);
+        }else {
+            session.removeAttribute("User-login");
+            return BaseResponse.success(ResponMessge.Logoutsuccess);
+        }
+    }
 }
 
 
