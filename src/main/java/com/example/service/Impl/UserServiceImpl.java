@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService{
@@ -39,8 +40,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             Activity activity= activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity));
             int flag=activity.getBeginTime().compareTo(currentDate);
             if(flag>=0){//这样子开始时间比现在迟才能报名，也就是begin时间-现在时间大于零
-                userMapper.UserLinkActivity(activity.getId(),user.getEmail(),"No",null,null);
-                return BaseResponse.success("报名成功");
+               List<String> listUser=activityMapper.getActivityUserById(activityMapper.getActivityIdByName(nameActivity));
+               int listmanyUser=listUser.size();
+               if(listmanyUser<activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity)).getMaxpeople()){
+                   userMapper.UserLinkActivity(activity.getId(),user.getEmail(),"No",null,null);
+                   return BaseResponse.success("报名成功");
+               }else {
+                   return BaseResponse.success("活动已经满人！");
+               }
             }else{
                 return BaseResponse.Error("活动已经开始或或者结束了，报名失败！");
             }
@@ -119,7 +126,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 LocalDateTime BeginTime= DateTranslation.DateTranslationLocalDateTime(date);
                 LocalDateTime EndTime= DateTranslation.DateTranslationLocalDateTime(dateSingIn);
                 Duration duration = Duration.between(BeginTime,EndTime);
-                long TimeDuration=duration.toHours();
+                long TimeDuration=duration.toMinutes();//以分钟作为计算单位
                 long Timetotal=user.getTime()+TimeDuration;
                 user.setTime(Timetotal);
                 userMapper.updateById(user);

@@ -5,6 +5,7 @@ import com.example.mapper.ActivityMapper;
 import com.example.model.entity.Activity;
 import com.example.model.request.ActivityRequest;
 import com.example.service.ActivityService;
+import com.example.utility.CaptchaUtil;
 import com.example.utility.DateTranslation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     @Override
     public Boolean removeActivity(Integer idActivity) {
         activityMapper.deleteById(idActivity);
+        CaptchaUtil.ActivityAndsigninCode.remove(idActivity);
+        CaptchaUtil.ActivityAndsignoutCode.remove(idActivity);
         return true;
     }
 }
