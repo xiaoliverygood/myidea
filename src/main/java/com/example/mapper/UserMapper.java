@@ -19,7 +19,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select SignInTime from LinkActirity where id=#{id} And userEmail=#{userEmail}")
     Date SignInTimeByUserEmailandId(@Param("id") int id, @Param("userEmail")String userEmail);
-    @Select("select activity.id, name,time,begin_time,late_time from LinkActirity left join activity on activity.id=LinkActirity.id where userEmail=#{userEmail};")
+    @Select("select activity.id, name,time,begin_time,late_time,location,maxpeople,belonging_adimit from LinkActirity left join activity on activity.id=LinkActirity.id where userEmail=#{userEmail};")
     public List<Activity> findMyAllActivity(@Param("userEmail") String userEmail);
 }
 

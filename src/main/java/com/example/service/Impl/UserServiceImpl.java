@@ -48,7 +48,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
     }
 
-    @Override//为完成的功能
+    @Override
     public BaseResponse singinActivity(HttpServletRequest httpServletRequest, String SinginCode,String Name) {
        HttpSession session=httpServletRequest.getSession();
         User user=(User) session.getAttribute("User-login");
@@ -83,7 +83,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if(CaptchaUtil.EmailAndCode.get(userRegister.getEmail()).equals(userRegister.getCode())){
             User register=new User(userRegister.getEmail(), userRegister.getPassword(), userRegister.getSex(), userRegister.getTime());
             userMapper.insert(register);
-            return BaseResponse.success(register);
+            return BaseResponse.success("成功注册！");
         }else {
             return BaseResponse.Error(ResponMessge.CaptchaError.getMessage());
         }

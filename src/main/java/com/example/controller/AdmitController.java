@@ -17,7 +17,7 @@ public class AdmitController {
     AdmitService admitService;
     @RequestMapping("/register")
     public BaseResponse register(@RequestBody AdmitRegister admitRegister){
-       return admitService.register( admitRegister);
+       return admitService.register(admitRegister);
     }
     @RequestMapping("/login")
     public BaseResponse login(@RequestBody Admit admit, HttpServletRequest httpServletRequest){

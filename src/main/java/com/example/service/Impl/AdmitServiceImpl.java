@@ -46,6 +46,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         if(CaptchaUtil.EmailAndCode.get(admitRegister.getEmail()).equals(admitRegister.getCode())){
             Admit register=new Admit(admitRegister.getEmail(), admitRegister.getPassword());
             admitMapper.insert(register);
+            CaptchaUtil.EmailAndCode.remove(admitRegister.getEmail());
             return BaseResponse.success(register);
         }else {
             return BaseResponse.Error(ResponMessge.CaptchaError.getMessage());
@@ -106,7 +107,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
             return BaseResponse.Error(ResponMessge.NologError);
         }else {
             QueryWrapper<Activity> queryWrapper=new QueryWrapper<>();
-            queryWrapper.eq("belongingAdimit",admit.getEmail());
+            queryWrapper.eq("belonging_adimit",admit.getEmail());
             List<Activity> myActivity=activityMapper.selectList(queryWrapper);
             return BaseResponse.success(myActivity);
         }
