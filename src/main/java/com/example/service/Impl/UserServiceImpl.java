@@ -125,7 +125,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 Date dateSingIn=userMapper.SignInTimeByUserEmailandId(activityMapper.getActivityIdByName(Name),user.getEmail());
                 LocalDateTime BeginTime= DateTranslation.DateTranslationLocalDateTime(date);
                 LocalDateTime EndTime= DateTranslation.DateTranslationLocalDateTime(dateSingIn);
-                Duration duration = Duration.between(BeginTime,EndTime);
+                Duration duration = Duration.between(EndTime,BeginTime);
                 long TimeDuration=duration.toMinutes();//以分钟作为计算单位
                 long Timetotal=user.getTime()+TimeDuration;
                 user.setTime(Timetotal);
