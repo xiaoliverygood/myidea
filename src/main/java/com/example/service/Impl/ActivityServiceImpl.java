@@ -22,9 +22,14 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     public Boolean addActivity(ActivityRequest activityRequest,String admitEmail) {
         Date BeaginData = DateTranslation.localDateTimeTransformDate(activityRequest.getBeginTime());
         Date EndData = DateTranslation.localDateTimeTransformDate(activityRequest.getLateTime());
-        Activity activity=new Activity(null,activityRequest.getName(),activityRequest.getTime(),BeaginData,EndData,activityRequest.getLocation(),activityRequest.getMaxpeople(),admitEmail);
-        activityMapper.insert(activity);
-        return true;
+        int result =BeaginData.compareTo(EndData);
+        if(result<0){
+            Activity activity=new Activity(null,activityRequest.getName(),activityRequest.getTime(),BeaginData,EndData,activityRequest.getLocation(),activityRequest.getMaxpeople(),admitEmail);
+            activityMapper.insert(activity);
+            return true;
+        }else {
+            return false;
+        }
     }
 
     @Override
