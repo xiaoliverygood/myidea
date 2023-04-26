@@ -13,6 +13,6 @@ public class UserRegister {
     private String password;
     private String sex;
     private Long time;
-    @JsonProperty("Code")
+    @JsonProperty("Code")//json格式的数据是要求骆驼峰形式的
     private String Code;
 }
