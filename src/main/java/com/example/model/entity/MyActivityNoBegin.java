@@ -13,6 +13,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class MyActivityNoBegin {
     private int id;
-    private Date begin_time;
-    private Date late_time;
+    private Date beginTime;
+    private Date lateTime;
 }

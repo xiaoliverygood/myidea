@@ -19,7 +19,7 @@ public class JudgeTime {
         LocalDateTime dete2=DateTranslation.DateTranslationLocalDateTime(end);
         int i=0;
         while (list.size()>i){
-            Boolean result=TimeOverlapExample.isTimeOverlap(date,dete2,DateTranslation.DateTranslationLocalDateTime(list.get(i).getBegin_time()),DateTranslation.DateTranslationLocalDateTime(list.get(i).getLate_time()));
+            Boolean result=TimeOverlapExample.isTimeOverlap(date,dete2,DateTranslation.DateTranslationLocalDateTime(list.get(i).getBeginTime()),DateTranslation.DateTranslationLocalDateTime(list.get(i).getLateTime()));
             if (result==true){
                 return false;//这就是会冲突的
             }

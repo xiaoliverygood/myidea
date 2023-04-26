@@ -18,7 +18,7 @@ public interface UserMapper extends BaseMapper<User> {
     @Update("UPDATE LinkActirity SET SignOutTime = #{SignOutTime} , ActivityTerminated = \"YES\" WHERE id = #{id} AND userEmail = #{userEmail}")
   void UserSingOut(@Param("SignOutTime") Date SignOutTime, @Param("id") int id, @Param("userEmail") String userEmail);
 
-    @Select("select SignInTime from LinkActirity where id=#{id} And userEmail=#{userEmail}")
+    @Select("select SignInTime from LinkActirity where id=#{id} And userEmail=#{userEmail}")//这个sql语句要使用回sql对应的字段，在java中下划线映射为骆驼峰格式
     Date SignInTimeByUserEmailandId(@Param("id") int id, @Param("userEmail")String userEmail);
     @Select("select activity.id, name,time,begin_time,late_time,location,maxpeople,belonging_adimit from LinkActirity left join activity on activity.id=LinkActirity.id where userEmail=#{userEmail};")
     public List<Activity> findMyAllActivity(@Param("userEmail") String userEmail);

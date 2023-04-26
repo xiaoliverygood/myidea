@@ -91,7 +91,7 @@ class IVolunteerApplicationTests {
         Boolean i=TimeOverlapExample.isTimeOverlap(localDateTime,localDateTime2,localDateTime3,localDateTime4);
         System.out.println(i);//返回true这代表时间冲突
         List<MyActivityNoBegin> list=userMapper.myActivityNoBegin("12345@qq.com");
-        System.out.println(list);
+        System.out.println(list.get(0).getLateTime());
         System.out.println(list.size());
 
     }
