@@ -14,20 +14,20 @@ import java.util.Date;
 
 
 @Service
-public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService{
+public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
     @Autowired
     ActivityMapper activityMapper;
 
     @Override
-    public Boolean addActivity(ActivityRequest activityRequest,String admitEmail) {
+    public Boolean addActivity(ActivityRequest activityRequest, String admitEmail) {
         Date BeaginData = DateTranslation.localDateTimeTransformDate(activityRequest.getBeginTime());
         Date EndData = DateTranslation.localDateTimeTransformDate(activityRequest.getLateTime());
-        int result =BeaginData.compareTo(EndData);
-        if(result<0){
-            Activity activity=new Activity(null,activityRequest.getName(),activityRequest.getTime(),BeaginData,EndData,activityRequest.getLocation(),activityRequest.getMaxpeople(),admitEmail);
+        int result = BeaginData.compareTo(EndData);
+        if (result < 0) {
+            Activity activity = new Activity(null, activityRequest.getName(), activityRequest.getTime(), BeaginData, EndData, activityRequest.getLocation(), activityRequest.getMaxpeople(), admitEmail);
             activityMapper.insert(activity);
             return true;
-        }else {
+        } else {
             return false;
         }
     }
