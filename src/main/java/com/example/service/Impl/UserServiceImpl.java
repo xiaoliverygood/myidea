@@ -13,6 +13,7 @@ import com.example.mapper.UserMapper;
 import com.example.utility.CaptchaUtil;
 import com.example.utility.DateTranslation;
 import com.example.utility.EmailRegularExpression;
+import com.example.utility.JudgeTime;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     ActivityMapper activityMapper;
 
+    @Autowired
+    JudgeTime judgeTime;
     @Override
     public BaseResponse applyActivity(HttpServletRequest httpServletRequest, String nameActivity) {
         HttpSession session = httpServletRequest.getSession();
@@ -42,12 +45,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             int flag = activity.getBeginTime().compareTo(currentDate);
             if (flag >= 0) {//这样子开始时间比现在迟才能报名，也就是begin时间-现在时间大于零
                 List<String> listUser = activityMapper.getActivityUserById(activityMapper.getActivityIdByName(nameActivity));
+                Boolean flagJudgeTime=judgeTime.juedge(user.getEmail(),activity.getBeginTime(),activity.getLateTime());
                 int listmanyUser = listUser.size();
-                if (listmanyUser < activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity)).getMaxpeople()) {
+                if (listmanyUser < activityMapper.selectById(activityMapper.getActivityIdByName(nameActivity)).getMaxpeople()&&flagJudgeTime==true) {
                     userMapper.UserLinkActivity(activity.getId(), user.getEmail(), "No", null, null);
                     return BaseResponse.success("报名成功");
                 } else {
-                    return BaseResponse.success("活动已经满人！");
+                    return BaseResponse.success("活动已经满人！或者你已经在此时间段参加了另一个活动！");
                 }
             } else {
                 return BaseResponse.Error("活动已经开始或或者结束了，报名失败！");
@@ -135,7 +139,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 Date dateSingIn = userMapper.SignInTimeByUserEmailandId(activityMapper.getActivityIdByName(Name), user.getEmail());
                 LocalDateTime BeginTime = DateTranslation.DateTranslationLocalDateTime(date);
                 LocalDateTime EndTime = DateTranslation.DateTranslationLocalDateTime(dateSingIn);
-                Duration duration = Duration.between(BeginTime,EndTime);
+                Duration duration = Duration.between(BeginTime, EndTime);
                 long TimeDuration = duration.toMinutes();//以分钟作为计算单位
                 long Timetotal = user.getTime() + TimeDuration;
                 user.setTime(Timetotal);

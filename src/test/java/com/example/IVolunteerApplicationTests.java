@@ -4,6 +4,7 @@ import com.example.mapper.ActivityMapper;
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.UserMapper;
 import com.example.model.entity.Activity;
+import com.example.model.entity.MyActivityNoBegin;
 import com.example.model.entity.User;
 import com.example.utility.DateTranslation;
 import com.example.utility.TimeOverlapExample;
@@ -15,6 +16,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest
 class IVolunteerApplicationTests {
@@ -88,6 +90,10 @@ class IVolunteerApplicationTests {
         LocalDateTime localDateTime4 = LocalDateTime.of(2022,05,20,15,14);
         Boolean i=TimeOverlapExample.isTimeOverlap(localDateTime,localDateTime2,localDateTime3,localDateTime4);
         System.out.println(i);//返回true这代表时间冲突
+        List<MyActivityNoBegin> list=userMapper.myActivityNoBegin("12345@qq.com");
+        System.out.println(list);
+        System.out.println(list.size());
+
     }
 
 }

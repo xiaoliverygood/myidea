@@ -1,6 +1,7 @@
 package com.example.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.model.entity.Activity;
+import com.example.model.entity.MyActivityNoBegin;
 import com.example.model.entity.User;
 import org.apache.ibatis.annotations.*;
 
@@ -21,6 +22,8 @@ public interface UserMapper extends BaseMapper<User> {
     Date SignInTimeByUserEmailandId(@Param("id") int id, @Param("userEmail")String userEmail);
     @Select("select activity.id, name,time,begin_time,late_time,location,maxpeople,belonging_adimit from LinkActirity left join activity on activity.id=LinkActirity.id where userEmail=#{userEmail};")
     public List<Activity> findMyAllActivity(@Param("userEmail") String userEmail);
+    @Select("select activity.id,begin_time,late_time from LinkActirity left join activity on activity.id=LinkActirity.id  where userEmail=#{userEmail} And ActivityTerminated='No'")
+    public List<MyActivityNoBegin> myActivityNoBegin(@Param("userEmail") String userEmail);
 }
 
 
