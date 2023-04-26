@@ -6,6 +6,7 @@ import com.example.mapper.UserMapper;
 import com.example.model.entity.Activity;
 import com.example.model.entity.User;
 import com.example.utility.DateTranslation;
+import com.example.utility.TimeOverlapExample;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -77,6 +78,16 @@ class IVolunteerApplicationTests {
         User user = new User("2834897@qq.com",null,null,null);
         user.setTime(9098L);
         userMapper.updateById(user);
+    }
+    @Test
+    public void test9(){
+        //测试时间重叠部分
+        LocalDateTime localDateTime = LocalDateTime.of(2022,05,20,13,14);
+        LocalDateTime localDateTime2 = LocalDateTime.of(2022,05,20,16,14);
+        LocalDateTime localDateTime3 = LocalDateTime.of(2022,05,20,14,14);
+        LocalDateTime localDateTime4 = LocalDateTime.of(2022,05,20,15,14);
+        Boolean i=TimeOverlapExample.isTimeOverlap(localDateTime,localDateTime2,localDateTime3,localDateTime4);
+        System.out.println(i);//返回true这代表时间冲突
     }
 
 }
