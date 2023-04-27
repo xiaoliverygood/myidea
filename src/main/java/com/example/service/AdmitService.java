@@ -14,7 +14,7 @@ public interface AdmitService extends IService<Admit> {
 
     BaseResponse login(Admit admit, HttpServletRequest httpServletRequest);
 
-    BaseResponse updataPassword(HttpServletRequest httpServletRequest, String newPassword);
+    BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword);
 
     BaseResponse releaseActivity(HttpServletRequest httpServlet, ActivityRequest activityRequest);
 

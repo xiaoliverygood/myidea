@@ -7,47 +7,46 @@ import com.example.model.request.DeleteActivityRequest;
 import com.example.service.AdmitService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/Admin")
 public class AdmitController {
     @Autowired
     AdmitService admitService;
-    @RequestMapping("/register")
+    @PostMapping("/register")
     public BaseResponse register(@RequestBody AdmitRegister admitRegister){
        return admitService.register(admitRegister);
     }
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public BaseResponse login(@RequestBody Admit admit, HttpServletRequest httpServletRequest){
         return admitService.login(admit,httpServletRequest);
     }
-    @RequestMapping("/updataPassword")
-    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword){
-        return admitService.updataPassword(httpServletRequest,newPassword);
+    @PutMapping("/updataPassword")
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword){
+        return admitService.updataPassword(httpServletRequest,email,newPassword);
     }
-    @RequestMapping("/releaseActivity")
+    @PostMapping("/releaseActivity")
     public BaseResponse releaseActivity(HttpServletRequest httpServlet, @RequestBody ActivityRequest activityRequest){
         return admitService.releaseActivity(httpServlet,activityRequest);
     }
-    @RequestMapping("/deleteActivity")
+    @DeleteMapping("/deleteActivity")
     public BaseResponse deleteActivity(HttpServletRequest httpServlet, @RequestBody DeleteActivityRequest deleteActivityRequest){
         return admitService.deleteActivity(httpServlet,deleteActivityRequest);
     }
-    @RequestMapping("/findMyActivity")
+    @GetMapping("/findMyActivity")
     public BaseResponse findMyActivity(HttpServletRequest httpServlet){
         return admitService.findMyActivity(httpServlet);
     }
-    @RequestMapping("/findMyActivityUser")
+    @GetMapping("/findMyActivityUser")
     public BaseResponse findMyActivityUser(HttpServletRequest httpServlet,int id){
         return admitService.findMyActivityUser(httpServlet,id);
     }
-    @RequestMapping("/showMyMessage")
+    @GetMapping("/showMyMessage")
     public BaseResponse showMyMessage(HttpServletRequest httpServlet){
         return admitService.showMyMessage(httpServlet);
     }
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     public BaseResponse logout(HttpServletRequest httpServlet){
         return admitService.logout(httpServlet);
     }

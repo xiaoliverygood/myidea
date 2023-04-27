@@ -10,10 +10,10 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface UserService extends IService<User> {
     BaseResponse userRegister(UserRegister userRegister);
     BaseResponse login(UserLogin userLogin, HttpServletRequest httpServletRequest);
-    BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword);
-    BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,String Name);
-    BaseResponse applyActivity(HttpServletRequest httpServletRequest,String nameActivity);
-    BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,String Name);
+    BaseResponse updataPassword(HttpServletRequest httpServletRequest,String mail,String newPassword);
+    BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,int id);
+    BaseResponse applyActivity(HttpServletRequest httpServletRequest,int id);
+    BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,int id);
     BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest);
     BaseResponse showMyMessage(HttpServletRequest httpServletRequest);
     BaseResponse logout(HttpServletRequest httpServletRequest);

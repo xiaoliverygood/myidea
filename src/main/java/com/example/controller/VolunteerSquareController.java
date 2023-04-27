@@ -4,6 +4,7 @@ import com.example.common.BaseResponse;
 import com.example.model.entity.Activity;
 import com.example.service.VolunteerSquareService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,15 +15,15 @@ import java.util.List;
 public class VolunteerSquareController {
     @Autowired
     VolunteerSquareService volunteerSquareService;
-    @RequestMapping("/search")
+    @GetMapping("/search")
     public BaseResponse<List<Activity>> search(){
         return volunteerSquareService.showAllActivity();
     }
-    @RequestMapping("/searchByname")
+    @GetMapping("/searchByname")
     public BaseResponse searchByname(String name){
        return volunteerSquareService.searchByname(name);
     }
-    @RequestMapping("/searchLike")
+    @GetMapping("/searchLike")
     public BaseResponse searchLike(String nameLike){
         return volunteerSquareService.searchLike(nameLike);
     }

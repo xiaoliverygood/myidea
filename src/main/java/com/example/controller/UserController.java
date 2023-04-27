@@ -5,45 +5,44 @@ import com.example.model.request.UserRegister;
 import com.example.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 @RestController
 @RequestMapping("/User")
 public class UserController {
     @Autowired
     UserService userService;
-    @RequestMapping("/register")
+    @PostMapping("/register")
     public BaseResponse register(@RequestBody UserRegister userRegister){return userService.userRegister(userRegister);}
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public BaseResponse login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest){
         return userService.login(userLogin, httpServletRequest);
     }
-    @RequestMapping("/updataPassword")
-    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String newPassword){
-        return userService.updataPassword(httpServletRequest, newPassword);
+    @PutMapping("/updataPassword")
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword){
+        return userService.updataPassword(httpServletRequest, email,newPassword);
     }
-    @RequestMapping("/applyActivity")
-    public BaseResponse applyActivity(HttpServletRequest httpServletRequest,String nameActivity){
-        return userService.applyActivity(httpServletRequest,nameActivity);
+    @GetMapping("/applyActivity")
+    public BaseResponse applyActivity(HttpServletRequest httpServletRequest,int id){
+        return userService.applyActivity(httpServletRequest,id);
     }
-    @RequestMapping("/singinActivity")
-    public BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,String Name){
-        return userService.singinActivity(httpServletRequest,SinginCode,Name);
+    @GetMapping("/singinActivity")
+    public BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,int id){
+        return userService.singinActivity(httpServletRequest,SinginCode,id);
     }
-    @RequestMapping("/singoutActivity")
-    public BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,String Name){
-        return userService.singoutActivity(httpServletRequest,SingOutCode,Name);
+    @GetMapping("/singoutActivity")
+    public BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,int id){
+        return userService.singoutActivity(httpServletRequest,SingOutCode,id);
     }
-    @RequestMapping("/findMyAllActivity")
+    @GetMapping("/findMyAllActivity")
     public BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest){
        return userService.findMyAllActivity(httpServletRequest);
     }
-    @RequestMapping("/showMyMessage")
+    @GetMapping("/showMyMessage")
     public BaseResponse showMyMessage(HttpServletRequest httpServletRequest){
        return userService.showMyMessage(httpServletRequest);
     }
-    @RequestMapping("/logout")
+    @GetMapping("/logout")
     public BaseResponse logout(HttpServletRequest httpServletRequest){
         return userService.logout(httpServletRequest);
     }

@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -96,4 +97,14 @@ class IVolunteerApplicationTests {
 
     }
 
+    @Test
+    void test10() {
+        LocalDateTime BeginTime = LocalDateTime.of(2000,11,21,12,00,00);
+        LocalDateTime EndTime =LocalDateTime.of(2000,11,21,12,30,00);
+        Duration duration = Duration.between(BeginTime, EndTime);
+        long TimeDuration = duration.toMinutes();//以分钟作为计算单位
+        long a=0;
+       long Timetotal = a + TimeDuration;
+        System.out.println(Timetotal);
+    }
 }

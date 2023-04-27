@@ -90,7 +90,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         if (admit == null) {
             return BaseResponse.Error(ResponMessge.NologError.getMessage());
         } else {
-            Boolean removeSuccess = activityService.removeActivity(activityMapper.getActivityIdByName(deleteActivityRequest.getActivityName()));
+            Boolean removeSuccess = activityService.removeActivity(deleteActivityRequest.getId());
             if (removeSuccess) {
                 return BaseResponse.success("删除成功！");
             } else {
@@ -100,7 +100,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
     }
 
     @Override
-    public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String newPassword) {
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword) {
         HttpSession session = httpServletRequest.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
         if (admit == null) {
