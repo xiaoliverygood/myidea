@@ -18,6 +18,10 @@ public class UserController {
     public BaseResponse login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest){
         return userService.login(userLogin, httpServletRequest);
     }
+    @PutMapping("/findPassword")
+    public BaseResponse findPassword(String email,String newPassword,String code) {
+        return userService.findPassword(email, newPassword, code);
+    }
     @PutMapping("/updataPassword")
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword){
         return userService.updataPassword(httpServletRequest, email,newPassword);

@@ -160,6 +160,18 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
             return BaseResponse.success(ResponMessge.Logoutsuccess);
         }
     }
+
+    @Override
+    public BaseResponse findPassword(String email, String newPassword, String code) {
+        if(CaptchaUtil.EmailAndCodeFindpassword.get(email).equals(code)){
+            Admit admit=admitMapper.selectById(email);
+            admit.setPassword(newPassword);
+            admitMapper.updateById(admit);
+            return BaseResponse.success(admit);
+        }else {
+            return BaseResponse.Error(ResponMessge.CaptchaError);
+        }
+    }
 }
 
 

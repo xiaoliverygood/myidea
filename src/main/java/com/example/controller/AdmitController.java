@@ -18,6 +18,10 @@ public class AdmitController {
     public BaseResponse register(@RequestBody AdmitRegister admitRegister){
        return admitService.register(admitRegister);
     }
+    @PutMapping("/findPassword")
+    public BaseResponse findPassword(String email,String newPassword,String code){
+        return admitService.findPassword(email,newPassword,code);
+    }
     @GetMapping("/login")
     public BaseResponse login(@RequestBody Admit admit, HttpServletRequest httpServletRequest){
         return admitService.login(admit,httpServletRequest);

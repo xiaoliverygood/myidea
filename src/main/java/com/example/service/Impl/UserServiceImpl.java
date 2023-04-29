@@ -183,6 +183,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             return BaseResponse.success(ResponMessge.Logoutsuccess);
         }
     }
+
+    @Override
+    public BaseResponse findPassword(String email, String newPassword, String code) {
+        if(CaptchaUtil.EmailAndCodeFindpassword.get(email).equals(code)){
+            User user = userMapper.selectById(email);
+            user.setPassword(newPassword);
+            userMapper.updateById(user);
+            return BaseResponse.success(user);
+        }else {
+            return BaseResponse.Error(ResponMessge.CaptchaError);
+        }
+    }
 }
 
 

@@ -22,6 +22,7 @@ public interface AdmitService extends IService<Admit> {
     BaseResponse findMyActivity(HttpServletRequest httpServlet);
     BaseResponse findMyActivityUser(HttpServletRequest httpServlet,int id);
     BaseResponse showMyMessage(HttpServletRequest httpServlet);
+    BaseResponse findPassword(String email,String newPassword,String code);
     BaseResponse logout(HttpServletRequest httpServlet);
 }
 

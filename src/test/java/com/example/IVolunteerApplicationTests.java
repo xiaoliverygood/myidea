@@ -4,6 +4,7 @@ import com.example.mapper.ActivityMapper;
 import com.example.mapper.AdmitMapper;
 import com.example.mapper.UserMapper;
 import com.example.model.entity.Activity;
+import com.example.model.entity.Admit;
 import com.example.model.entity.MyActivityNoBegin;
 import com.example.model.entity.User;
 import com.example.utility.CaptchaUtil;
@@ -111,6 +112,9 @@ class IVolunteerApplicationTests {
     }
     @Test
     void  text11(){
-        System.out.println(CaptchaUtil.EmailAndCode.get(" 123456789@qq.com"));
+        //System.out.println(CaptchaUtil.EmailAndCode.get(" 123456789@qq.com"));
+        Admit admit=admitMapper.selectById("123456789@qq.com");
+        admit.setPassword("abc");
+        admitMapper.updateById(admit);
     }
 }
