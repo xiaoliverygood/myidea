@@ -6,8 +6,10 @@ import com.example.mapper.UserMapper;
 import com.example.model.entity.Activity;
 import com.example.model.entity.MyActivityNoBegin;
 import com.example.model.entity.User;
+import com.example.utility.CaptchaUtil;
 import com.example.utility.DateTranslation;
 import com.example.utility.TimeOverlapExample;
+import org.apache.catalina.startup.Catalina;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -106,5 +108,9 @@ class IVolunteerApplicationTests {
         long a=0;
        long Timetotal = a + TimeDuration;
         System.out.println(Timetotal);
+    }
+    @Test
+    void  text11(){
+        System.out.println(CaptchaUtil.EmailAndCode.get(" 123456789@qq.com"));
     }
 }
