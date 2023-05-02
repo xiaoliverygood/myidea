@@ -12,7 +12,7 @@ public class UploadController {
     @Autowired
     uploadActivityUtil upload;
     @RequestMapping("upload")
-    public String upload(@RequestParam("file")MultipartFile file){
-        return upload.uploadFile(file);
+    public String upload(@RequestParam("file")MultipartFile file,String name){
+        return upload.uploadFile(file,name);
     }
 }

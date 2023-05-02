@@ -12,12 +12,13 @@ import java.io.OutputStream;
 @Component
 
 public class uploadActivityUtil {
-    public String uploadFile(MultipartFile file) {
+    public String uploadFile(MultipartFile file,String name) {
         try {
-            // 获取上传的文件名
-            String fileName = file.getOriginalFilename();
+            String originalFileName = file.getOriginalFilename(); // 获取原始文件名
+            String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1); // 获取文件扩展名
+            String newFileName = name + "." + extension; // 根据扩展名生成新的文件名
 // 设置文件保存路径
-            String filePath = "L:\\桌面文件\\plan of winter holiday\\MyFirstProject\\iVolunteer\\imageActivity\\" + fileName;
+            String filePath = "imageActivity/" + newFileName;
 // 创建文件输出流
             File out = new File(filePath);
             FileUtils.copyInputStreamToFile(file.getInputStream(), out);
