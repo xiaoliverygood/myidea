@@ -22,7 +22,7 @@ public class AdmitController {
     public BaseResponse findPassword(String email,String newPassword,String code){
         return admitService.findPassword(email,newPassword,code);
     }
-    @GetMapping("/login")
+    @PostMapping("/login")
     public BaseResponse login(@RequestBody Admit admit, HttpServletRequest httpServletRequest){
         return admitService.login(admit,httpServletRequest);
     }

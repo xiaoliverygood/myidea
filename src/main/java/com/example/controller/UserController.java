@@ -14,7 +14,7 @@ public class UserController {
     UserService userService;
     @PostMapping("/register")
     public BaseResponse register(@RequestBody UserRegister userRegister){return userService.userRegister(userRegister);}
-    @GetMapping("/login")
+    @PostMapping("/login")
     public BaseResponse login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest){
         return userService.login(userLogin, httpServletRequest);
     }

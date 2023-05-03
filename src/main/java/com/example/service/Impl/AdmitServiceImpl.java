@@ -10,6 +10,7 @@ import com.example.model.entity.Admit;
 import com.example.model.request.ActivityRequest;
 import com.example.model.request.AdmitRegister;
 import com.example.model.request.DeleteActivityRequest;
+import com.example.model.respon.ResponEntityType;
 import com.example.service.ActivityService;
 import com.example.service.AdmitService;
 import com.example.mapper.AdmitMapper;
@@ -39,7 +40,8 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
             if (admit.getPassword().equals(admitMapper.selectById(admit.getEmail()).getPassword())) {
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("User-login", admit);
-                return BaseResponse.success(admit);
+                ResponEntityType responEntityType=new ResponEntityType(admit.getEmail(),admit.getPassword(),"admit");
+                return BaseResponse.success(responEntityType);
             } else {
                 return BaseResponse.Error(ResponMessge.UserOrPasswordError.getMessage());
             }

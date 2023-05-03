@@ -7,6 +7,7 @@ import com.example.model.entity.Activity;
 import com.example.model.entity.User;
 import com.example.model.request.UserLogin;
 import com.example.model.request.UserRegister;
+import com.example.model.respon.ResponEntityType;
 import com.example.service.UserService;
 import com.example.mapper.UserMapper;
 import com.example.utility.CaptchaUtil;
@@ -82,7 +83,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 User user = userMapper.selectById(userLogin.getEmail());
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("User-login", user);
-                return BaseResponse.success(user);
+                ResponEntityType responEntityType=new ResponEntityType(user.getEmail(),user.getPassword(),"user");
+                return BaseResponse.success(responEntityType);
             } else {
                 return BaseResponse.Error(ResponMessge.UserOrPasswordError);
             }
