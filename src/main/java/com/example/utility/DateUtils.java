@@ -8,11 +8,15 @@ import java.util.Date;
 public class DateUtils {
     private static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    public static Date stringToDate(String dateStr, String pattern) throws ParseException {
+    public static Date stringToDate(String dateStr, String pattern)  {
         DateFormat dateFormat = new SimpleDateFormat(pattern);
-        return dateFormat.parse(dateStr);
+        try {
+            return dateFormat.parse(dateStr);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
-    public static Date stringToDate(String dateStr) throws ParseException {
+    public static Date stringToDate(String dateStr) {
         return stringToDate(dateStr, DEFAULT_PATTERN);
     }
 

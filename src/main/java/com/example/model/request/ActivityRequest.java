@@ -12,8 +12,10 @@ import java.util.Date;
 public class ActivityRequest {
     private String name;
     private Integer time;
-    private LocalDateTime beginTime;
-    private LocalDateTime lateTime;
+//    private LocalDateTime beginTime;
+//    private LocalDateTime lateTime;
+    private String beginTime;
+    private String lateTime;
     private String location;
     private Integer maxpeople;
 }
