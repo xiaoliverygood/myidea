@@ -145,7 +145,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         HttpSession session = httpServlet.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
         if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError);
+            return BaseResponse.Error(ResponMessge.NologError.getMessage());
         } else {
             return BaseResponse.success(admit);
         }
