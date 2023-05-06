@@ -89,7 +89,6 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
             return BaseResponse.Error("验证码发送失败");
         }
     }
-
     @Override
     public BaseResponse deleteActivity(HttpServletRequest httpServlet, DeleteActivityRequest deleteActivityRequest) {
         HttpSession session = httpServlet.getSession();
@@ -100,9 +99,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         } else {
             return BaseResponse.Error("删除失败");
         }
-
     }
-
     @Override
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String email, String newPassword) {
         HttpSession session = httpServletRequest.getSession();
@@ -130,9 +127,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         Admit admit = (Admit) session.getAttribute("User-login");
         List<String> myActivity = activityMapper.getActivityUserById(id);
         return BaseResponse.success(myActivity);
-
     }
-
     @Override
     public BaseResponse showMyMessage(HttpServletRequest httpServlet) {
         HttpSession session = httpServlet.getSession();
