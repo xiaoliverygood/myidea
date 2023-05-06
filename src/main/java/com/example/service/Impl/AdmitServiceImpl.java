@@ -16,11 +16,15 @@ import com.example.service.AdmitService;
 import com.example.mapper.AdmitMapper;
 import com.example.utility.CaptchaUtil;
 import com.example.utility.EmailRegularExpression;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -147,6 +151,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         if (admit == null) {
             return BaseResponse.Error(ResponMessge.NologError.getMessage());
         } else {
+            System.out.println("meikong");
             return BaseResponse.success(admit);
         }
     }
