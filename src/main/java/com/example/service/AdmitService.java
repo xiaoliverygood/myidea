@@ -7,12 +7,13 @@ import com.example.model.request.ActivityRequest;
 import com.example.model.request.AdmitRegister;
 import com.example.model.request.DeleteActivityRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface AdmitService extends IService<Admit> {
     BaseResponse register(AdmitRegister admitRegister);
 
-    BaseResponse login(Admit admit, HttpServletRequest httpServletRequest);
+    BaseResponse login(Admit admit, HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse);
 
     BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword);
 

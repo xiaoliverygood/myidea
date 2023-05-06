@@ -6,10 +6,11 @@ import com.example.model.entity.User;
 import com.example.model.request.UserLogin;
 import com.example.model.request.UserRegister;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public interface UserService extends IService<User> {
     BaseResponse userRegister(UserRegister userRegister);
-    BaseResponse login(UserLogin userLogin, HttpServletRequest httpServletRequest);
+    BaseResponse login(UserLogin userLogin, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse);
     BaseResponse updataPassword(HttpServletRequest httpServletRequest,String mail,String newPassword);
     BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,int id);
     BaseResponse applyActivity(HttpServletRequest httpServletRequest,int id);

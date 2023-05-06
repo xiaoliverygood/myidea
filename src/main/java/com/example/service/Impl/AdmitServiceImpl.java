@@ -39,12 +39,17 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
     ActivityService activityService;
 
     @Override
-    public BaseResponse login(Admit admit, HttpServletRequest httpServletRequest) {
+    public BaseResponse login(Admit admit, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         if (EmailRegularExpression.RegularEmailPattern(admit.getEmail())) {
             if (admit.getPassword().equals(admitMapper.selectById(admit.getEmail()).getPassword())) {
                 HttpSession session = httpServletRequest.getSession();
                 session.setAttribute("User-login", admit);
-                ResponEntityType responEntityType=new ResponEntityType(admit.getEmail(),admit.getPassword(),"admit");
+                String sessionId = session.getId();
+                Cookie cookie = new Cookie("JSESSIONID", sessionId);
+                cookie.setMaxAge(24 * 60 * 60);
+                cookie.setPath("/*");
+                httpServletResponse.addCookie(cookie);
+                ResponEntityType responEntityType = new ResponEntityType(admit.getEmail(), admit.getPassword(), "admit");
                 return BaseResponse.success(responEntityType);
             } else {
                 return BaseResponse.Error(ResponMessge.UserOrPasswordError.getMessage());
@@ -75,17 +80,13 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
     public BaseResponse releaseActivity(HttpServletRequest httpServlet, ActivityRequest activityRequest) {
         HttpSession session = httpServlet.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
-        if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError.getMessage());
+        Boolean addSuccess = activityService.addActivity(activityRequest, admit.getEmail());
+        if (addSuccess) {
+            captchaUtil.ActivitySinginCode(admit.getEmail(), activityMapper.getActivityIdByName(activityRequest.getName()));
+            captchaUtil.ActivitySingOutCode(admit.getEmail(), activityMapper.getActivityIdByName(activityRequest.getName()));
+            return BaseResponse.success("成功发布活动");
         } else {
-            Boolean addSuccess = activityService.addActivity(activityRequest, admit.getEmail());
-            if (addSuccess) {
-                captchaUtil.ActivitySinginCode(admit.getEmail(), activityMapper.getActivityIdByName(activityRequest.getName()));
-                captchaUtil.ActivitySingOutCode(admit.getEmail(), activityMapper.getActivityIdByName(activityRequest.getName()));
-                return BaseResponse.success("成功发布活动");
-            } else {
-                return BaseResponse.Error("验证码发送失败");
-            }
+            return BaseResponse.Error("验证码发送失败");
         }
     }
 
@@ -93,89 +94,68 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
     public BaseResponse deleteActivity(HttpServletRequest httpServlet, DeleteActivityRequest deleteActivityRequest) {
         HttpSession session = httpServlet.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
-        if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError.getMessage());
+        Boolean removeSuccess = activityService.removeActivity(deleteActivityRequest.getId());
+        if (removeSuccess) {
+            return BaseResponse.success("删除成功！");
         } else {
-            Boolean removeSuccess = activityService.removeActivity(deleteActivityRequest.getId());
-            if (removeSuccess) {
-                return BaseResponse.success("删除成功！");
-            } else {
-                return BaseResponse.Error("删除失败");
-            }
+            return BaseResponse.Error("删除失败");
         }
+
     }
 
     @Override
-    public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword) {
+    public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String email, String newPassword) {
         HttpSession session = httpServletRequest.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
-        if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError.getMessage());
-        } else {
-            admit.setPassword(newPassword);
-            admitMapper.updateById(admit);
-            return BaseResponse.success(admit);
-        }
+        admit.setPassword(newPassword);
+        admitMapper.updateById(admit);
+        return BaseResponse.success(admit);
+
     }
 
     @Override
     public BaseResponse findMyActivity(HttpServletRequest httpServlet) {
         HttpSession session = httpServlet.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
-        if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError);
-        } else {
-            QueryWrapper<Activity> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("belonging_adimit", admit.getEmail());
-            List<Activity> myActivity = activityMapper.selectList(queryWrapper);
-            return BaseResponse.success(myActivity);
-        }
+        QueryWrapper<Activity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("belonging_adimit", admit.getEmail());
+        List<Activity> myActivity = activityMapper.selectList(queryWrapper);
+        return BaseResponse.success(myActivity);
+
     }
 
     @Override
     public BaseResponse findMyActivityUser(HttpServletRequest httpServlet, int id) {
         HttpSession session = httpServlet.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
-        if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError);
-        } else {
-            List<String> myActivity = activityMapper.getActivityUserById(id);
-            return BaseResponse.success(myActivity);
-        }
+        List<String> myActivity = activityMapper.getActivityUserById(id);
+        return BaseResponse.success(myActivity);
+
     }
 
     @Override
     public BaseResponse showMyMessage(HttpServletRequest httpServlet) {
         HttpSession session = httpServlet.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
-        if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError.getMessage());
-        } else {
-            System.out.println("meikong");
-            return BaseResponse.success(admit);
-        }
+        return BaseResponse.success(admit);
     }
 
     @Override
     public BaseResponse logout(HttpServletRequest httpServlet) {
         HttpSession session = httpServlet.getSession();
         Admit admit = (Admit) session.getAttribute("User-login");
-        if (admit == null) {
-            return BaseResponse.Error(ResponMessge.NologError);
-        } else {
-            session.removeAttribute("User-login");
-            return BaseResponse.success(ResponMessge.Logoutsuccess);
-        }
+        session.removeAttribute("User-login");
+        return BaseResponse.success(ResponMessge.Logoutsuccess);
     }
 
     @Override
     public BaseResponse findPassword(String email, String newPassword, String code) {
-        if(CaptchaUtil.EmailAndCodeFindpassword.get(email).equals(code)){
-            Admit admit=admitMapper.selectById(email);
+        if (CaptchaUtil.EmailAndCodeFindpassword.get(email).equals(code)) {
+            Admit admit = admitMapper.selectById(email);
             admit.setPassword(newPassword);
             admitMapper.updateById(admit);
             return BaseResponse.success(admit);
-        }else {
+        } else {
             return BaseResponse.Error(ResponMessge.CaptchaError);
         }
     }

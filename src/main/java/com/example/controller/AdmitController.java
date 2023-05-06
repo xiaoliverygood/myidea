@@ -6,6 +6,7 @@ import com.example.model.request.AdmitRegister;
 import com.example.model.request.DeleteActivityRequest;
 import com.example.service.AdmitService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,8 @@ public class AdmitController {
         return admitService.findPassword(email,newPassword,code);
     }
     @PostMapping("/login")
-    public BaseResponse login(@RequestBody Admit admit, HttpServletRequest httpServletRequest){
-        return admitService.login(admit,httpServletRequest);
+    public BaseResponse login(@RequestBody Admit admit, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        return admitService.login(admit,httpServletRequest,httpServletResponse);
     }
     @PutMapping("/updataPassword")
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest,String email,String newPassword){

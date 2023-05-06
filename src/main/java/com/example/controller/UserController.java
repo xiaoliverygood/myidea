@@ -4,6 +4,7 @@ import com.example.model.request.UserLogin;
 import com.example.model.request.UserRegister;
 import com.example.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,8 @@ public class UserController {
     @PostMapping("/register")
     public BaseResponse register(@RequestBody UserRegister userRegister){return userService.userRegister(userRegister);}
     @PostMapping("/login")
-    public BaseResponse login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest){
-        return userService.login(userLogin, httpServletRequest);
+    public BaseResponse login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse){
+        return userService.login(userLogin, httpServletRequest,httpServletResponse);
     }
     @PutMapping("/findPassword")
     public BaseResponse findPassword(String email,String newPassword,String code) {
