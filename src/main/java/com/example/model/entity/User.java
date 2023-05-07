@@ -18,25 +18,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements Serializable {
-    /**
-     * 
-     */
+
     @TableId
     private String email;
-
-    /**
-     * 
-     */
     private String password;
 
-    /**
-     * 
-     */
     private String sex;
 
-    /**
-     * 
-     */
     private Long time;
 
     @TableField(exist = false)

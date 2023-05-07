@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.BaseResponse;
 import com.example.common.ResponMessge;
 import com.example.mapper.ActivityMapper;
+import com.example.model.LoginAuth;
 import com.example.model.entity.Activity;
 import com.example.model.entity.Admit;
 import com.example.model.request.ActivityRequest;
@@ -16,6 +17,7 @@ import com.example.service.AdmitService;
 import com.example.mapper.AdmitMapper;
 import com.example.utility.CaptchaUtil;
 import com.example.utility.EmailRegularExpression;
+import com.example.utility.UserHolder;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +28,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements AdmitService {
@@ -42,14 +45,9 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
     public BaseResponse login(Admit admit, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         if (EmailRegularExpression.RegularEmailPattern(admit.getEmail())) {
             if (admit.getPassword().equals(admitMapper.selectById(admit.getEmail()).getPassword())) {
-                HttpSession session = httpServletRequest.getSession();
-                session.setAttribute("User-login", admit);
-                String sessionId = session.getId();
-                Cookie cookie = new Cookie("JSESSIONID", sessionId);
-                cookie.setMaxAge(24 * 60 * 60);
-                cookie.setPath("/*");
-                httpServletResponse.addCookie(cookie);
-                ResponEntityType responEntityType = new ResponEntityType(admit.getEmail(), admit.getPassword(), "admit");
+                LoginAuth loginAuth = new LoginAuth(UUID.randomUUID().toString(),admit);
+                UserHolder.saveUser(loginAuth.getToken(),loginAuth);
+                ResponEntityType responEntityType = new ResponEntityType( "admit",loginAuth.getToken());
                 return BaseResponse.success(responEntityType);
             } else {
                 return BaseResponse.Error(ResponMessge.UserOrPasswordError.getMessage());
@@ -59,7 +57,6 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
         }
 
     }
-
     @Override
     public BaseResponse register(AdmitRegister admitRegister) {
         if (EmailRegularExpression.RegularEmailPattern(admitRegister.getEmail())) {
@@ -78,8 +75,8 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
 
     @Override
     public BaseResponse releaseActivity(HttpServletRequest httpServlet, ActivityRequest activityRequest) {
-        HttpSession session = httpServlet.getSession();
-        Admit admit = (Admit) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServlet.getHeader("token"));
+        Admit admit = (Admit) loginAuth.getData();
         Boolean addSuccess = activityService.addActivity(activityRequest, admit.getEmail());
         if (addSuccess) {
             captchaUtil.ActivitySinginCode(admit.getEmail(), activityMapper.getActivityIdByName(activityRequest.getName()));
@@ -91,8 +88,8 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
     }
     @Override
     public BaseResponse deleteActivity(HttpServletRequest httpServlet, DeleteActivityRequest deleteActivityRequest) {
-        HttpSession session = httpServlet.getSession();
-        Admit admit = (Admit) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServlet.getHeader("token"));
+        Admit admit = (Admit) loginAuth.getData();
         Boolean removeSuccess = activityService.removeActivity(deleteActivityRequest.getId());
         if (removeSuccess) {
             return BaseResponse.success("删除成功！");
@@ -102,8 +99,8 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
     }
     @Override
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String email, String newPassword) {
-        HttpSession session = httpServletRequest.getSession();
-        Admit admit = (Admit) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
+        Admit admit = (Admit) loginAuth.getData();
         admit.setPassword(newPassword);
         admitMapper.updateById(admit);
         return BaseResponse.success(admit);
@@ -112,8 +109,8 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
 
     @Override
     public BaseResponse findMyActivity(HttpServletRequest httpServlet) {
-        HttpSession session = httpServlet.getSession();
-        Admit admit = (Admit) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServlet.getHeader("token"));
+        Admit admit = (Admit) loginAuth.getData();
         QueryWrapper<Activity> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("belonging_adimit", admit.getEmail());
         List<Activity> myActivity = activityMapper.selectList(queryWrapper);
@@ -123,15 +120,15 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
 
     @Override
     public BaseResponse findMyActivityUser(HttpServletRequest httpServlet, int id) {
-        HttpSession session = httpServlet.getSession();
-        Admit admit = (Admit) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServlet.getHeader("token"));
+        Admit admit = (Admit) loginAuth.getData();
         List<String> myActivity = activityMapper.getActivityUserById(id);
         return BaseResponse.success(myActivity);
     }
     @Override
     public BaseResponse showMyMessage(HttpServletRequest httpServlet) {
-        HttpSession session = httpServlet.getSession();
-        Admit admit = (Admit) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServlet.getHeader("token"));
+        Admit admit = (Admit) loginAuth.getData();
         return BaseResponse.success(admit);
     }
 

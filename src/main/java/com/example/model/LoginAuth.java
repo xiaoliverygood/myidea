@@ -1,13 +1,15 @@
-package com.example.model.respon;
+package com.example.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ResponEntityType {
-    private String type;
+@AllArgsConstructor
+public class LoginAuth<T> {
+
     private String token;
+
+    private T data;
 }

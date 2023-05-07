@@ -4,17 +4,16 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.common.BaseResponse;
 import com.example.common.ResponMessge;
 import com.example.mapper.ActivityMapper;
+import com.example.model.LoginAuth;
 import com.example.model.entity.Activity;
+import com.example.model.entity.Admit;
 import com.example.model.entity.User;
 import com.example.model.request.UserLogin;
 import com.example.model.request.UserRegister;
 import com.example.model.respon.ResponEntityType;
 import com.example.service.UserService;
 import com.example.mapper.UserMapper;
-import com.example.utility.CaptchaUtil;
-import com.example.utility.DateTranslation;
-import com.example.utility.EmailRegularExpression;
-import com.example.utility.JudgeTime;
+import com.example.utility.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +25,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -39,8 +39,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse applyActivity(HttpServletRequest httpServletRequest, int id) {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
+        User user = (User) loginAuth.getData();
         Date currentDate = new Date();
         Activity activity = activityMapper.selectById(id);
         int flag = activity.getBeginTime().compareTo(currentDate);
@@ -61,8 +61,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse singinActivity(HttpServletRequest httpServletRequest, String SinginCode, int id) {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
+        User user = (User) loginAuth.getData();
         String correctCode = CaptchaUtil.ActivityAndsigninCode.get(id);
         if (correctCode.equals(SinginCode)) {
             Date date = new Date();
@@ -78,12 +78,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (EmailRegularExpression.RegularEmailPattern(userLogin.getEmail())) {
             if (userLogin.getPassword().equals(userMapper.selectById(userLogin.getEmail()).getPassword())) {
                 User user = userMapper.selectById(userLogin.getEmail());
-                HttpSession session = httpServletRequest.getSession();
-                session.setAttribute("User-login", user);
-                String sessionid = session.getId();
-                Cookie cookie = new Cookie("JSESSIONID", sessionid);
-                httpServletResponse.addCookie(cookie);
-                ResponEntityType responEntityType = new ResponEntityType(user.getEmail(), user.getPassword(), "user");
+                LoginAuth loginAuth = new LoginAuth(UUID.randomUUID().toString(),user);
+                UserHolder.saveUser(loginAuth.getToken(),loginAuth);
+                ResponEntityType responEntityType = new ResponEntityType( "user",loginAuth.getToken());
                 return BaseResponse.success(responEntityType);
             } else {
                 return BaseResponse.Error(ResponMessge.UserOrPasswordError);
@@ -91,7 +88,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else {
             return BaseResponse.Error(ResponMessge.UserOrPasswordError);
         }
-
     }
 
     @Override
@@ -111,8 +107,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse updataPassword(HttpServletRequest httpServletRequest, String email, String newPassword) {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
+        User user = (User) loginAuth.getData();
         user.setPassword(newPassword);
         userMapper.updateById(user);
         return BaseResponse.success(user);
@@ -120,8 +116,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse singoutActivity(HttpServletRequest httpServletRequest, String SingOutCode, int id) {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
+        User user = (User) loginAuth.getData();
         String correctCode = CaptchaUtil.ActivityAndsignoutCode.get(id);
         if (correctCode.equals(SingOutCode)) {
             Date date = new Date();
@@ -142,15 +138,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse showMyMessage(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
+        User user = (User) loginAuth.getData();
         return BaseResponse.success(user);
     }
 
     @Override
     public BaseResponse findMyAllActivity(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("User-login");
+        LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
+        User user = (User) loginAuth.getData();
         return BaseResponse.success(userMapper.findMyAllActivity(user.getEmail()));
     }
 

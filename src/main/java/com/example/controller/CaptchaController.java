@@ -12,8 +12,8 @@ public class CaptchaController {
     @Autowired
     CaptchaUtil captchaUtil;
     @GetMapping ("/captcha")
-    public BaseResponse<String> getCaptcha(String emailAddress){
-       return BaseResponse.success(captchaUtil.RigisterCode(emailAddress));
+    public BaseResponse<String> getCaptcha(String email){
+       return BaseResponse.success(captchaUtil.RigisterCode(email));
     }
     @GetMapping("/findPasswordCaptcha")
     public BaseResponse<String> findpasswordCaptcha(String emailAddress){

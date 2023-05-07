@@ -28,7 +28,8 @@ public class CaptchaUtil {
     }
 
    public String RigisterCode(String aimadress) {
-        //SimpleMailMessage是一个比较简易的邮件封装，支持设置一些比较简单内容
+       System.out.println(aimadress);
+       //SimpleMailMessage是一个比较简易的邮件封装，支持设置一些比较简单内容
         SimpleMailMessage message = new SimpleMailMessage();
         //设置邮件标题
         message.setSubject("【志愿服务系统】");
@@ -38,7 +39,8 @@ public class CaptchaUtil {
         //设置邮件发送给谁，可以多个，这里就发给你的QQ邮箱
         message.setTo(aimadress);
         //邮件发送者，这里要与配置文件中的保持一致
-        message.setFrom("ljz2020comeon@163.com");
+//        message.setFrom("ljz2020comeon@163.com");
+       message.setFrom("2848762983@qq.com");
         //OK，万事俱备只欠发送
         sender.send(message);
         EmailAndCode.put(aimadress, CodeTemplate);
