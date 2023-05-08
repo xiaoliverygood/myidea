@@ -134,9 +134,7 @@ public class AdmitServiceImpl extends ServiceImpl<AdmitMapper, Admit> implements
 
     @Override
     public BaseResponse logout(HttpServletRequest httpServlet) {
-        HttpSession session = httpServlet.getSession();
-        Admit admit = (Admit) session.getAttribute("User-login");
-        session.removeAttribute("User-login");
+        UserHolder.remove(httpServlet.getHeader("token"));
         return BaseResponse.success(ResponMessge.Logoutsuccess);
     }
 

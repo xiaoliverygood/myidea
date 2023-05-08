@@ -152,9 +152,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public BaseResponse logout(HttpServletRequest httpServletRequest) {
-        HttpSession session = httpServletRequest.getSession();
-        User user = (User) session.getAttribute("User-login");
-        session.removeAttribute("User-login");
+        UserHolder.remove(httpServletRequest.getHeader("token"));
         return BaseResponse.success(ResponMessge.Logoutsuccess);
     }
 

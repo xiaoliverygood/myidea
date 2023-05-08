@@ -15,6 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -116,5 +120,30 @@ class IVolunteerApplicationTests {
         Admit admit=admitMapper.selectById("123456789@qq.com");
         admit.setPassword("abc");
         admitMapper.updateById(admit);
+    }
+    @Test
+    void text12(){
+        String filePath = "L:\\桌面文件\\44\\example.txt"; // 文件路径
+
+        try {
+            File file = new File(filePath); // 创建一个File对象
+
+            if (file.createNewFile()) { // 尝试创建新文件
+                System.out.println("文件已创建");
+            } else {
+                System.out.println("文件已存在");
+            }
+
+            // 向文件中写入内容
+            FileOutputStream fos = new FileOutputStream(file);
+            PrintWriter pw = new PrintWriter(fos);
+            pw.println("这是一个示例文本文件");
+            pw.close();
+
+            System.out.println("文件已写入完成");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
