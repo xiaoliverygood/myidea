@@ -24,7 +24,9 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class IVolunteerApplicationTests {
@@ -141,6 +143,8 @@ class IVolunteerApplicationTests {
             pw.close();
 
             System.out.println("文件已写入完成");
+            Map<String,String> map = new HashMap<String,String>();
+
 
         } catch (IOException e) {
             e.printStackTrace();
