@@ -16,7 +16,6 @@ public class QiniuUtil {
     private static final String SECRET_KEY = "qjQcw6AbtcsX1LqcAu1E1bUBUMT3L9Yt1S2Ysxo6";
     private static final String BUCKET_NAME = "xiaoli2023";
     private static final String DOMAIN = "ru83u0iyp.hn-bkt.clouddn.com";
-
     // 上传图片并返回图片名称
     public static String uploadImage( byte[] data,String imageName) throws Exception {
         Configuration cfg = new Configuration(Region.autoRegion());
