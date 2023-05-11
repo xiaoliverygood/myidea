@@ -34,16 +34,10 @@ public class UserController {
     }
     @PostMapping("/singinActivity")
     public BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,int id){
-        System.out.println("签到");
-        System.out.println(id);
-        System.out.println(SinginCode);
         return userService.singinActivity(httpServletRequest,SinginCode,id);
     }
     @PostMapping("/singoutActivity")
     public BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,int id){
-        System.out.println("签退");
-        System.out.println(id);
-        System.out.println(SingOutCode);
         return userService.singoutActivity(httpServletRequest,SingOutCode,id);
     }
     @GetMapping("/findMyAllActivity")
