@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.model.entity.Activity;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -16,6 +17,8 @@ public interface ActivityMapper extends BaseMapper<Activity> {
     public List<String> getActivityUserById(@Param("id") int id);
     @Select("SELECT * FROM activity WHERE name LIKE '%${nameLike}%' ")
     public List<Activity> selectResult(@Param("nameLike") String nameLike);
+    @Delete("DELETE FROM LinkActirity WHERE id=#{id} ")
+    boolean delListActivityById(@Param("id") int id);
 }
 
 

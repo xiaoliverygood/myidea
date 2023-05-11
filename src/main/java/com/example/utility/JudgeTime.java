@@ -18,9 +18,12 @@ public class JudgeTime {
         LocalDateTime date=DateTranslation.DateTranslationLocalDateTime(begin);
         LocalDateTime dete2=DateTranslation.DateTranslationLocalDateTime(end);
         int i=0;
-        while (list.size()>i){
+        System.out.println(list.size());
+        System.out.println(list.toString());
+        if(list.isEmpty()) return true;
+        while ((list.size()-1)>=i){
             Boolean result=TimeOverlapExample.isTimeOverlap(date,dete2,DateTranslation.DateTranslationLocalDateTime(list.get(i).getBeginTime()),DateTranslation.DateTranslationLocalDateTime(list.get(i).getLateTime()));
-            if (result==true){
+            if (result==false){
                 return false;//这就是会冲突的
             }
             i++;

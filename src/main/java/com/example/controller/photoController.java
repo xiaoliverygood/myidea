@@ -4,6 +4,7 @@ import com.example.common.BaseResponse;
 import com.example.utility.showPhotoUtil;
 import com.example.utility.uploadActivityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,11 +16,11 @@ public class photoController {
     uploadActivityUtil upload;
     @Autowired
     showPhotoUtil showPhotoUtil;
-    @RequestMapping("/upload")
+    @PostMapping("/upload")
     public BaseResponse upload(@RequestParam("file")MultipartFile file, String name){
         return BaseResponse.success(upload.uploadFile(file,name));
     }
-    @RequestMapping("/showPhoto")
+    @PostMapping("/showPhoto")
     public BaseResponse showPhoto(String name){
        return BaseResponse.success(showPhotoUtil.getPhotoByName(name));
     }

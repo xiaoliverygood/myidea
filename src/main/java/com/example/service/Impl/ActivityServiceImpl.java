@@ -38,6 +38,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     @Override
     public Boolean removeActivity(Integer idActivity) {
         activityMapper.deleteById(idActivity);
+        activityMapper.delListActivityById(idActivity);
         CaptchaUtil.ActivityAndsigninCode.remove(idActivity);
         CaptchaUtil.ActivityAndsignoutCode.remove(idActivity);
         return true;
