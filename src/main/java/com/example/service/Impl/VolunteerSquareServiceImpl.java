@@ -32,6 +32,7 @@ public class VolunteerSquareServiceImpl implements VolunteerSquareService {
     @Override
     public BaseResponse searchLike(String nameLike) {
         List<Activity> activityList = activityMapper.selectResult(nameLike);
+        System.out.println(activityList);
         return BaseResponse.success(activityList);
     }
 }

@@ -31,11 +31,11 @@ public class UserController {
     public BaseResponse applyActivity(HttpServletRequest httpServletRequest,int id){
         return userService.applyActivity(httpServletRequest,id);
     }
-    @GetMapping("/singinActivity")
+    @PostMapping("/singinActivity")
     public BaseResponse singinActivity(HttpServletRequest httpServletRequest,String SinginCode,int id){
         return userService.singinActivity(httpServletRequest,SinginCode,id);
     }
-    @GetMapping("/singoutActivity")
+    @PostMapping("/singoutActivity")
     public BaseResponse singoutActivity(HttpServletRequest httpServletRequest,String SingOutCode,int id){
         return userService.singoutActivity(httpServletRequest,SingOutCode,id);
     }

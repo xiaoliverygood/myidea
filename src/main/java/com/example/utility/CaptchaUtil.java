@@ -28,7 +28,6 @@ public class CaptchaUtil {
     }
 
    public String RigisterCode(String aimadress) {
-       System.out.println(aimadress);
        //SimpleMailMessage是一个比较简易的邮件封装，支持设置一些比较简单内容
         SimpleMailMessage message = new SimpleMailMessage();
         //设置邮件标题
