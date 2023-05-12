@@ -22,8 +22,8 @@ public class CaptchaUtil {
     StringRedisTemplate template;//连接redis，并注册为bean
     public static Map<String,String> EmailAndCode= new HashMap<>();
     public static Map<String,String> EmailAndCodeFindpassword=new HashMap<>();
-    public static Map<Integer,String> ActivityAndsigninCode= new HashMap<>();
-    public static Map<Integer,String> ActivityAndsignoutCode= new HashMap<>();
+   // public static Map<Integer,String> ActivityAndsigninCode= new HashMap<>();
+   // public static Map<Integer,String> ActivityAndsignoutCode= new HashMap<>();
     public static String getCode() {
        Random random= new Random();
         int randomCode =random.nextInt(100000,999999);
