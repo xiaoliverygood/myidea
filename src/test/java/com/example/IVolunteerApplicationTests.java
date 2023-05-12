@@ -14,6 +14,8 @@ import org.apache.catalina.startup.Catalina;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -149,5 +151,16 @@ class IVolunteerApplicationTests {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @Autowired
+    StringRedisTemplate template;//可以说是连接redis后的对象
+    @Test
+    public void test15(){
+        ValueOperations<String, String> operations = template.opsForValue();//这个operations是对opsForevalue进行封装，也就是说其实 ValueOperations是对opsForValue()的方法进行封装，opsForValue()里面还有方法的
+        operations.set("c", "xxxxx");   //设置值
+        System.out.println(operations.get("c"));   //获取值
+        System.out.println(operations.get("c"));
+        template.delete("c");    //删除键
+        System.out.println(template.hasKey("c"));   //判断是否包含键
     }
 }

@@ -19,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -36,6 +37,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     JudgeTime judgeTime;
+    @Autowired
+    StringRedisTemplate template;//连接redis，并注册为bean
 
     @Override
     public BaseResponse applyActivity(HttpServletRequest httpServletRequest, int id) {
@@ -63,7 +66,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public BaseResponse singinActivity(HttpServletRequest httpServletRequest, String SinginCode, int id) {
         LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
         User user = (User) loginAuth.getData();
-        String correctCode = CaptchaUtil.ActivityAndsigninCode.get(id);
+       // String correctCode = CaptchaUtil.ActivityAndsigninCode.get(id);
+        String correctCode=template.opsForValue().get("ActivitySinginCode"+Integer.toString(id));
         if (correctCode.equals(SinginCode)) {
             Date date = new Date();
             userMapper.UserSingIn(date, id, user.getEmail());
@@ -118,7 +122,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public BaseResponse singoutActivity(HttpServletRequest httpServletRequest, String SingOutCode, int id) {
         LoginAuth loginAuth = (LoginAuth) UserHolder.get(httpServletRequest.getHeader("token"));
         User user = (User) loginAuth.getData();
-        String correctCode = CaptchaUtil.ActivityAndsignoutCode.get(id);
+        //String correctCode = CaptchaUtil.ActivityAndsignoutCode.get(id);
+        String correctCode=template.opsForValue().get("ActivitySingOutCode"+Integer.toString(id));
         if (correctCode.equals(SingOutCode)) {
             Date date = new Date();
             userMapper.UserSingOut(date, id, user.getEmail());

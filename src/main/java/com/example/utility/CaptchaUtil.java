@@ -1,6 +1,8 @@
 package com.example.utility;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,8 @@ import java.util.Random;
 public class CaptchaUtil {
     @Autowired
     JavaMailSender sender;//springboot已经注册为bean了，加入到Ioc容器里面了，不用new一个对象那么麻烦
+    @Autowired
+    StringRedisTemplate template;//连接redis，并注册为bean
     public static Map<String,String> EmailAndCode= new HashMap<>();
     public static Map<String,String> EmailAndCodeFindpassword=new HashMap<>();
     public static Map<Integer,String> ActivityAndsigninCode= new HashMap<>();
@@ -75,7 +79,8 @@ public class CaptchaUtil {
         message.setFrom("ljz2020comeon@163.com");
         //OK，万事俱备只欠发送
         sender.send(message);
-        ActivityAndsigninCode.put(id,CodeTemplate);
+       // ActivityAndsigninCode.put(id,CodeTemplate);
+        template.opsForValue().set("ActivitySinginCode"+Integer.toString(id),CodeTemplate);
         return CodeTemplate;
     }
     public String ActivitySingOutCode(String aimadress,Integer id) {
@@ -92,7 +97,8 @@ public class CaptchaUtil {
         message.setFrom("ljz2020comeon@163.com");
         //OK，万事俱备只欠发送
         sender.send(message);
-        ActivityAndsignoutCode.put(id, CodeTemplate);
+       // ActivityAndsignoutCode.put(id, CodeTemplate);
+        template.opsForValue().set("ActivitySingOutCode"+Integer.toString(id),CodeTemplate);
         return CodeTemplate;
     }
 
