@@ -23,8 +23,8 @@ public class uploadActivityUtil {
 // 设置文件保存路径
             String filePath = "imageActivity/" + newFileName;
 // 创建文件输出流
-            File out = new File(filePath);
-            FileUtils.copyInputStreamToFile(file.getInputStream(), out);
+           // File out = new File(filePath);
+           // FileUtils.copyInputStreamToFile(file.getInputStream(), out);
             QiniuUtil.uploadImage(file.getBytes(),name);
             return "文件上传成功！";
         } catch (Exception e) {

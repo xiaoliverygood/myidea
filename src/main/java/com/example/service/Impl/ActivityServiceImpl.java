@@ -9,6 +9,7 @@ import com.example.utility.CaptchaUtil;
 import com.example.utility.DateTranslation;
 import com.example.utility.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,7 +19,8 @@ import java.util.Date;
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> implements ActivityService {
     @Autowired
     ActivityMapper activityMapper;
-
+    @Autowired
+    StringRedisTemplate template;//可以说是连接redis后的对象
     @Override
     public Boolean addActivity(ActivityRequest activityRequest, String admitEmail) {
 //        Date BeaginData = DateTranslation.localDateTimeTransformDate(activityRequest.getBeginTime());
@@ -39,8 +41,10 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity> i
     public Boolean removeActivity(Integer idActivity) {
         activityMapper.deleteById(idActivity);
         activityMapper.delListActivityById(idActivity);
-        CaptchaUtil.ActivityAndsigninCode.remove(idActivity);
-        CaptchaUtil.ActivityAndsignoutCode.remove(idActivity);
+       // CaptchaUtil.ActivityAndsigninCode.remove(idActivity);
+       // CaptchaUtil.ActivityAndsignoutCode.remove(idActivity);
+        template.delete("ActivitySinginCode"+idActivity.toString());
+        template.delete("ActivitySingOutCode"+idActivity.toString());
         return true;
     }
 }
