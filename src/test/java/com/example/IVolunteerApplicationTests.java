@@ -163,4 +163,9 @@ class IVolunteerApplicationTests {
         template.delete("c");    //删除键
         System.out.println(template.hasKey("c"));   //判断是否包含键
     }
+
+    @Test
+    public void test16(){
+        template.opsForValue().set("c454545", "xxx4544554xx");
+    }
 }
